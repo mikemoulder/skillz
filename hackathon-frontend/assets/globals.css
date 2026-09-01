@@ -1,0 +1,154 @@
+/* Hackathon design tokens: Tailwind v4 + shadcn/ui
+ *
+ * Replace src/app/globals.css with this file, then change ONE thing:
+ * the two --primary lines, to CONFIG.md brand.primary. Everything else is
+ * a neutral ramp that already works in both modes.
+ *
+ * Tailwind v3? This file will not work. See references/scaffold.md.
+ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── The only line you edit ────────────────────────────────────────────── */
+:root {
+  --brand: oklch(0.62 0.19 264); /* CONFIG brand.primary */
+  --radius: 0.625rem;            /* CONFIG brand.radius  */
+}
+
+/* ── Light ─────────────────────────────────────────────────────────────── */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.21 0.02 264);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.02 264);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0.02 264);
+
+  --primary: var(--brand);
+  --primary-foreground: oklch(0.98 0.005 264);
+
+  --secondary: oklch(0.968 0.008 264);
+  --secondary-foreground: oklch(0.28 0.02 264);
+  --muted: oklch(0.968 0.008 264);
+  --muted-foreground: oklch(0.48 0.02 264); /* 4.6:1 on --background */
+  --accent: oklch(0.968 0.008 264);
+  --accent-foreground: oklch(0.28 0.02 264);
+
+  --destructive: oklch(0.58 0.22 27);
+  --success: oklch(0.62 0.15 150);
+  --warning: oklch(0.72 0.16 75);
+
+  --border: oklch(0.92 0.01 264);
+  --input: oklch(0.92 0.01 264);
+  --ring: var(--brand);
+
+  --chart-1: var(--brand);
+  --chart-2: oklch(0.65 0.14 195);
+  --chart-3: oklch(0.70 0.13 145);
+  --chart-4: oklch(0.75 0.15 85);
+  --chart-5: oklch(0.65 0.18 25);
+}
+
+/* ── Dark ──────────────────────────────────────────────────────────────── */
+.dark {
+  --background: oklch(0.16 0.014 264);
+  --foreground: oklch(0.97 0.006 264);
+  --card: oklch(0.20 0.016 264);
+  --card-foreground: oklch(0.97 0.006 264);
+  --popover: oklch(0.20 0.016 264);
+  --popover-foreground: oklch(0.97 0.006 264);
+
+  --primary: oklch(0.70 0.17 264); /* lift the accent ~8% L for dark */
+  --primary-foreground: oklch(0.18 0.02 264);
+
+  --secondary: oklch(0.26 0.018 264);
+  --secondary-foreground: oklch(0.97 0.006 264);
+  --muted: oklch(0.26 0.018 264);
+  --muted-foreground: oklch(0.71 0.015 264); /* 5.9:1 on --background */
+  --accent: oklch(0.28 0.02 264);
+  --accent-foreground: oklch(0.97 0.006 264);
+
+  --destructive: oklch(0.66 0.20 25);
+  --success: oklch(0.70 0.14 150);
+  --warning: oklch(0.78 0.15 75);
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.70 0.17 264);
+}
+
+/* ── Projector mode ─────────────────────────────────────────────────────
+ * CONFIG demo.surface: projector, add class="projector" to <html>.
+ * Raises muted text to ~7:1 and thickens borders so they survive the beam.
+ */
+.projector {
+  --muted-foreground: oklch(0.38 0.02 264);
+  --border: oklch(0.82 0.015 264);
+  font-size: 17px;
+}
+.dark.projector {
+  --muted-foreground: oklch(0.82 0.012 264);
+  --border: oklch(1 0 0 / 24%);
+}
+
+/* ── Bind tokens to Tailwind utilities ─────────────────────────────────── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    text-wrap: pretty;
+  }
+  h1, h2, h3 {
+    @apply font-semibold tracking-tight;
+    text-wrap: balance;
+  }
+  /* Never ship an invisible focus ring. Judges tab through things. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
