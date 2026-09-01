@@ -27,23 +27,27 @@ recon → ideation → architecture → frontend → polish → readme → judge
 
 ## Install
 
-This repo is a Claude Code plugin marketplace. Two commands:
+This repo is a Claude Code plugin marketplace. Two commands, from any terminal:
 
-```text
-/plugin marketplace add USER/REPO
-/plugin install skillz@skillz
+```bash
+claude plugin marketplace add MikeMoulder/skillz
+claude plugin install skillz@skillz
 ```
 
-Then invoke any skill as `/skillz:recon`, `/skillz:ideation`, and so on. Claude also
-loads them on its own when a request matches a skill's description, so you rarely have
-to type them.
+Restart Claude Code, then invoke any skill as `/skillz:recon`, `/skillz:ideation`, and
+so on. Claude also loads them on its own when a request matches a skill's description,
+so you rarely have to type them.
+
+In the terminal CLI you can use the slash forms instead (`/plugin marketplace add ...`,
+`/plugin install ...`). Those are not available in the VSCode extension, so the `claude
+plugin` commands above are the ones that work everywhere.
 
 Private repos work the same way: add your friends as collaborators and they run the
 same two commands. For quiet auto-updates on a private repo, they need SSH configured
 (`ssh-agent`) or a git credential helper.
 
-Update to the latest version with `/plugin marketplace update skillz`. Pin to a tag
-with `/plugin marketplace add USER/REPO@v1.0`.
+Update to the latest version with `claude plugin marketplace update skillz`. Pin to a tag
+with `claude plugin marketplace add MikeMoulder/skillz@v1.0`.
 
 ### Developing on it
 
