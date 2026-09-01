@@ -1,11 +1,11 @@
-# Idea brief — [PROJECT NAME]
+# Idea brief: [PROJECT NAME]
 
 <!--
 The output of /skillz:ideation and the input to every skill after it. Fill it in
 once, at minute 55, and keep it open. Anything the team disagrees about later is
 resolved here, not in a debate at 3am.
 
-Delete a section rather than leaving it blank — an empty section reads as "not decided
+Delete a section rather than leaving it blank, an empty section reads as "not decided
 yet", which is the state this document exists to end.
 -->
 
@@ -21,12 +21,12 @@ yet", which is the state this document exists to end.
 ## Problem
 
 **Who:** [one specific person, named by role, not a segment]
-**Pain:** [what they do today, and why it is bad — one or two sentences]
+**Pain:** [what they do today, and why it is bad, one or two sentences]
 **Evidence:** [why you believe this is real. "I have this problem" is valid evidence]
 
 ## Solution
 
-[Three sentences, maximum. No interface words — no screens, no clicks, no lists.
+[Three sentences, maximum. No interface words, no screens, no clicks, no lists.
 Describe what happens, not what the user taps.]
 
 ## Why now
@@ -46,9 +46,9 @@ makes this buildable this year and not five years ago.]
 
 ## The aha moment
 
-**At 0:30 the judge sees:** [one sentence — a thing that happens on screen]
+**At 0:30 the judge sees:** [one sentence, a thing that happens on screen]
 
-**Why it lands:** [visible / fast / unexpected / legible — which of these carry it]
+**Why it lands:** [visible / fast / unexpected / legible, which of these carry it]
 
 ## Demo script
 
@@ -65,17 +65,17 @@ makes this buildable this year and not five years ago.]
 ## MVP
 
 ```text
-MUST HAVE     — the aha moment cannot happen without these
+MUST HAVE       the aha moment cannot happen without these
   -
   -
 
-SHOULD HAVE   — build only after every MUST is done and deployed
+SHOULD HAVE     build only after every MUST is done and deployed
   -
 
-NICE TO HAVE  — build only if you are ahead, which you will not be
+NICE TO HAVE    build only if you are ahead, which you will not be
   -
 
-CUT           — decided, written down, not revisited at hour 20
+CUT             decided, written down, not revisited at hour 20
   -
 ```
 
@@ -87,7 +87,7 @@ CUT           — decided, written down, not revisited at hour 20
 ```text
 Build hours available:       [from CONFIG time.build_hours]
 Honest estimate for MUST:    [estimate x the multiplier from SKILL.md]
-Ratio:                       [must be under 0.5 — if not, cut, now]
+Ratio:                       [must be under 0.5, if not, cut, now]
 Riskiest component:          [what gets prototyped in hour one]
 ```
 
@@ -116,7 +116,7 @@ Riskiest component:          [what gets prototyped in hour one]
 ## Handoff
 
 ```text
-demo.hero_screen    — [the ONE screen that must be perfect, for /skillz:frontend]
-Owner per MUST item — [name against each, before anyone opens an editor]
-Next skill          — /skillz:frontend
+demo.hero_screen      [the ONE screen that must be perfect, for /skillz:frontend]
+Owner per MUST item   [name against each, before anyone opens an editor]
+Next skill            /skillz:frontend
 ```

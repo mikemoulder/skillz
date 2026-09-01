@@ -68,19 +68,19 @@ migration history is for teams that need to roll back, and you do not.
 | Host | Best for | Watch out for |
 |---|---|---|
 | **Vercel** | Next.js, the default | Function wall-clock limit; no long-running process |
-| **Railway** | A worker, a Python service, anything long-lived | Sleeps on free tiers — warm it before demoing |
+| **Railway** | A worker, a Python service, anything long-lived | Sleeps on free tiers. Warm it before demoing |
 | **Fly.io** | Persistent processes, websockets | More setup than you want at hour two |
 | **Render** | Simple always-on services | Cold starts on free tier are brutal |
 | **Cloudflare** | Edge, cheap and fast | Workers runtime is not Node; some SDKs break |
 
 Deploy in hour one, before there is anything to deploy. A team that deploys last loses
-the hack to a build error at minute 358 — a `Module not found` that only appears in a
+the hack to a build error at minute 358: a `Module not found` that only appears in a
 production build, an env var that only exists on a laptop, a package that needed a
 Node version the host does not run.
 
 ## The limits that actually bite
 
-**Verify these against your host's current docs during step 2** — they change, and the
+**Verify these against your host's current docs during step 2**. They change, and the
 free-tier numbers change most. What matters is the shape of the constraint, which does
 not change:
 
@@ -105,7 +105,7 @@ direct one, and cache the client in module scope.
 ```
 
 Set them in the host's dashboard the moment you create the project, not the night of.
-Then verify the deployed app has them — a missing env var in production is invisible
+Then verify the deployed app has them. A missing env var in production is invisible
 locally and presents as a 500 in front of a judge.
 
 `NEXT_PUBLIC_*` is shipped to the browser. Nothing secret gets that prefix, and before
@@ -125,8 +125,8 @@ grep -rl "sk-\|API_KEY\|SECRET" .next/static 2>/dev/null && echo "LEAK"
 | **Managed realtime** (Supabase, Pusher) | Multi-client sync is the product | Varies, plus a dependency |
 
 Polling looks identical to a judge and takes a tenth of the time. Choose SSE when the
-*streaming itself* is the demo — watching an agent's steps appear is genuinely better
-theater than a progress bar — and choose WebSockets only when two clients must see
+*streaming itself* is the demo (watching an agent's steps appear is genuinely better
+theater than a progress bar) and choose WebSockets only when two clients must see
 each other.
 
 ## Python, when you cannot avoid it

@@ -1,10 +1,10 @@
-# Architecture brief — [PROJECT NAME]
+# Architecture brief: [PROJECT NAME]
 
 <!--
 One page. It replaces the fifteen-section architecture document nobody reads at 3am.
 Written at minute 45, after the spike is already running.
 
-Its second job is to be the source of the README's architecture section — so the
+Its second job is to be the source of the README's architecture section, so the
 diagram here is the diagram judges see, which is why every box must be real.
 -->
 
@@ -14,7 +14,7 @@ diagram here is the diagram judges see, which is why every box must be real.
 Style:        modular monolith / [deviation, if any]
 Stack:        [runtime, framework, db, host]
 Deploys:      [how many. one is the right answer]
-Deployed at:  [URL — exists from hour one]
+Deployed at:  [URL, exists from hour one]
 ```
 
 ## The demo path
@@ -34,7 +34,7 @@ Deployed at:  [URL — exists from hour one]
 ## Diagram
 
 <!-- At most 7 boxes. Every box is a folder in this repo or a URL you can open.
-     Delete any box that is neither — a diagram that does not match the repo is a
+     Delete any box that is neither, a diagram that does not match the repo is a
      liability in Q&A, not an asset. -->
 
 ```text
@@ -81,7 +81,7 @@ Deployed at:  [URL — exists from hour one]
 ## Shared types
 
 ```ts
-// src/lib/types.ts — committed BEFORE any lane starts. frozen. changes announced.
+// src/lib/types.ts: committed BEFORE any lane starts. frozen. changes announced.
 ```
 
 ## External dependencies and their seams
@@ -91,12 +91,12 @@ Deployed at:  [URL — exists from hour one]
 | | | ☐ | |
 | | | ☐ | |
 
-**`DEMO_MODE` on stage:** `fixture` / `auto` — [verified on the deployed URL? ☐]
+**`DEMO_MODE` on stage:** `fixture` / `auto`, [verified on the deployed URL? ☐]
 
 ## Timeout budget
 
 ```text
-Host function limit:     [VERIFY against host docs — do not assume]
+Host function limit:     [VERIFY against host docs, do not assume]
 Longest operation:       [what, and how long]
 Shape chosen:            request handler / SSE / job row + worker
 ```
@@ -106,7 +106,7 @@ Shape chosen:            request handler / SSE / job row + worker
 ```text
 Secrets live:            [server only. grep .next/static before demoing]
 Signing key held by:     [n/a | user wallet | backend env | smart account]
-Agent authorization:     [n/a | allowlist + cap + human confirm — enforced in code]
+Agent authorization:     [n/a | allowlist + cap + human confirm, enforced in code]
 Network:                 [testnet | mainnet + why]
 ```
 

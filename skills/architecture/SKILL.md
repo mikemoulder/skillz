@@ -1,6 +1,6 @@
 ---
 name: architecture
-description: Design the smallest architecture that survives a hackathon — pick the stack in five minutes, draw seams so the whole team can build in parallel, put a fixture behind every external dependency, and get a risk-first build order that produces something deployed in hour one. Use after an idea is chosen, when a project needs structure, when connecting a frontend, backend, database, LLM, agent, chain or third-party API, when choosing between architectural approaches, or when the build has stalled and the design is the reason. Read CONFIG.md first.
+description: Design the smallest architecture that survives a hackathon, pick the stack in five minutes, draw seams so the whole team can build in parallel, put a fixture behind every external dependency, and get a risk-first build order that produces something deployed in hour one. Use after an idea is chosen, when a project needs structure, when connecting a frontend, backend, database, LLM, agent, chain or third-party API, when choosing between architectural approaches, or when the build has stalled and the design is the reason. Read CONFIG.md first.
 ---
 
 # Hackathon architecture
@@ -40,7 +40,7 @@ Architecture is capped at **45 minutes**. It ends with a spike running, not a do
 If this is taking ninety minutes, the architecture is too big. That is the signal, not
 the schedule slipping.
 
-## Step 1 — The demo path is the specification
+## Step 1: The demo path is the specification
 
 Take the demo script from `skills/ideation/assets/idea-brief.md` and write what the
 system does at each beat:
@@ -50,14 +50,14 @@ User action        →  what the UI does  →  what the server does  →  what p
 ```
 
 **Everything not on this path is out of scope until the path works end to end.** Not
-deprioritized — out. This single rule removes most architecture decisions before you
+deprioritized, out. This single rule removes most architecture decisions before you
 have to make them, because the components that were only serving hypothetical
 features stop existing.
 
 Mark one step as **the aha moment**. That step gets the redundancy, the fallback, and
 the good error handling. The others get none of it.
 
-## Step 2 — Take the default stack
+## Step 2: Take the default stack
 
 Where the choice does not change the outcome, do not spend the hour. The default:
 
@@ -94,11 +94,11 @@ the tool allowlist and the authorization boundary. `components.onchain: true` �
 lifecycle and the wallet model. Both are where the technical score and the sponsor
 judge's first question live. If neither is true, skip both and keep moving.
 
-## Step 3 — Draw the seams
+## Step 3: Draw the seams
 
 Two jobs, done at once.
 
-### Seam job A — parallel lanes
+### Seam job A: parallel lanes
 
 Architecture decides how many people can work at 3am. Draw the boundaries so each
 person owns files nobody else touches:
@@ -111,7 +111,7 @@ person owns files nobody else touches:
 | **Ops + demo** | Deploy, env vars, the demo path, README, the fallback recording | Whatever exists |
 
 With a team of two, merge Data+API into UI and keep the hard part isolated. The hard
-part is *always* its own lane — it is the thing most likely to run long, and it must
+part is *always* its own lane. It is the thing most likely to run long, and it must
 never block anyone.
 
 **The lanes meet at typed contracts, written before anyone opens an editor.** Define
@@ -120,11 +120,11 @@ hours. Ten minutes on this buys back the two hours of merge conflicts that norma
 arrive at hour 20.
 
 ```ts
-// src/lib/types.ts — committed before any lane starts. changes here are announced.
+// src/lib/types.ts: committed before any lane starts. changes here are announced.
 export type Task = { id: string; prompt: string; status: TaskStatus; steps: Step[] };
 ```
 
-### Seam job B — a fixture behind every dependency
+### Seam job B: a fixture behind every dependency
 
 Every call that leaves your process goes through one module that can serve a recorded
 response instead: LLMs, chains, third-party APIs, payment rails, anything.
@@ -142,13 +142,13 @@ in hour two rather than hour thirty:
 - You can rehearse the demo a hundred times without burning quota.
 - The slow dependency stops slowing every test cycle.
 
-`assets/seam.ts` is the drop-in wrapper — timeout, retry, fallback, and a flag to
+`assets/seam.ts` is the drop-in wrapper: timeout, retry, fallback, and a flag to
 force fixtures for the live demo. `references/seams-and-fixtures.md` covers recording
 real responses and which dependencies deserve which treatment. Note the layering: this
 is the *server* seam; `skills/frontend/assets/seed.ts` is the browser→API seam. A
 demo-proof project has both.
 
-## Step 4 — State and API surface
+## Step 4: State and API surface
 
 Minimum viable, and no more.
 
@@ -170,11 +170,11 @@ Skip, deliberately: users and auth (hardcode one user id), soft deletes, paginat
 migrations beyond `push`, audit columns, and any table whose purpose is "we might need
 it".
 
-## Step 5 — The risk spike, then the build order
+## Step 5: The risk spike, then the build order
 
 **Before the architecture is final**, one person makes the riskiest external call
 succeed exactly once, from a throwaway script. Not integrated, not wrapped, not
-typed — just proven.
+typed, just proven.
 
 ```bash
 # hour one, in a scratch file, in parallel with everything else
@@ -192,13 +192,13 @@ Then build in risk order, not layer order:
 |---|---|---|
 | 0 | Riskiest call proven in a script | Kills the project-ending unknown while it is cheap |
 | 1 | Empty app deployed | A URL exists. Deploy before you build |
-| 2 | Walking skeleton — one request, end to end, hardcoded | Proves the wiring, unblocks all lanes |
+| 2 | Walking skeleton, one request, end to end, hardcoded | Proves the wiring, unblocks all lanes |
 | 3 | The aha path, real | The one thing that must work |
 | 4 | The rest of the demo path | Everything else on the script |
 | 5 | States, errors, fallbacks | Where the polish score lives |
 | 6 | Demo hardening | Rehearse against production, record the fallback |
 
-Layer-first ordering — all the backend, then all the frontend — is the classic
+Layer-first ordering (all the backend, then all the frontend) is the classic
 hackathon mistake: nothing is demoable until the end, and the end never arrives.
 Milestone 2 before 3 is the whole trick. `references/build-order.md` has the
 checkpoints and what to do when a lane falls behind.
@@ -210,7 +210,7 @@ twenty with no warning:
 
 > It works locally. In production it 504s.
 
-Serverless functions have a wall-clock limit — often around 10 seconds on a free tier,
+Serverless functions have a wall-clock limit, often around 10 seconds on a free tier,
 and typically not more than a minute or two on paid ones. **Check your host's current
 limit before designing.** An agent loop that runs 90 seconds cannot live in a request
 handler at any limit worth relying on.
@@ -233,7 +233,7 @@ Short, and none of it optional:
 - **Secrets are server-side only.** In Next, anything named `NEXT_PUBLIC_*` ships to the
   browser. Before demoing: `grep -rl "sk-\|API_KEY\|SECRET" .next/static`.
 - **No private key in the repo, ever, on any network.** Not in `.env.example`, not in a
-  comment, not "just the testnet one" — testnet keys get reused on mainnet later.
+  comment, not "just the testnet one", testnet keys get reused on mainnet later.
 - **The agent proposes; your code decides.** Any agent touching money, keys or anything
   irreversible runs behind a boundary you enforce in ordinary code: an allowlist of
   callable tools, a hard cap on amounts, and a human confirmation on the irreversible
@@ -244,7 +244,7 @@ Short, and none of it optional:
 
 ## Theater
 
-Complexity added to look serious. Judges — particularly the sponsor engineers — read
+Complexity added to look serious. Judges, particularly the sponsor engineers, read
 all of it correctly.
 
 | Theater | Looks like | Actually |
@@ -264,7 +264,7 @@ worth real points in the README; one that does not is a liability in Q&A.
 
 Auth and login flows (hardcode a user). An admin panel. Rate limiting. Multi-tenancy.
 A migration history. Caching (nothing has load). Docker (the host builds from git).
-i18n. A component library. A test suite — one smoke test of the demo path is worth it,
+i18n. A component library. A test suite: one smoke test of the demo path is worth it,
 a suite is not. Retry logic anywhere except the seam. Anything whose justification
 starts with "when we scale".
 
@@ -278,7 +278,7 @@ When `time.build_hours < 8`, or the build has stalled and the design is why:
    working demo; a half-finished integration is not.
 3. **Delete the database if nothing must survive a reload.** In-memory state and seed
    data demo identically for three minutes.
-4. **Keep exactly the aha path.** Delete every route not on it — a judge will click one
+4. **Keep exactly the aha path.** Delete every route not on it. A judge will click one
    and find the half-built page.
 5. **Deploy, then record the working flow.** In that order.
 
@@ -301,7 +301,7 @@ one point of completeness and buys back several of credibility.
 
 ## Handoff
 
-Fill `assets/architecture-brief.md` — one page, and the source of the README diagram.
+Fill `assets/architecture-brief.md`: one page, and the source of the README diagram.
 Then: `/skillz:frontend` for the UI lane (hand it the types file and the seed shape),
 `/skillz:readme` for the judge-facing writeup, and `/skillz:version-control` for
 lane branches that survive a four-person merge at 3am.

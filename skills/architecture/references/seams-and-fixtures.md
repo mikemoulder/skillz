@@ -108,7 +108,7 @@ DEMO_MODE=auto      try live, fall back to fixture on failure or timeout (defaul
 ```
 
 `auto` is right for development. **`fixture` is right for the live demo**, even when
-the network is fine — it removes every variable you do not control from the three
+the network is fine, it removes every variable you do not control from the three
 minutes that decide your score. Set it in the host dashboard before you present, and
 verify the deployed URL is actually running in that mode.
 
@@ -125,7 +125,7 @@ Volunteering it costs almost nothing:
 - A `## What is real` section in the README, listing both columns honestly.
 
 Getting caught after claiming everything was live costs the judge's trust in every
-other claim you made — including the true ones, which is the expensive part.
+other claim you made, including the true ones, which is the expensive part.
 
 ## The test
 

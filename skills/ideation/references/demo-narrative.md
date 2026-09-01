@@ -1,6 +1,6 @@
 # Demo narrative
 
-Design the demo before the product. Not after, not alongside — before. The demo is the
+Design the demo before the product. not after, not alongside. Before it, The demo is the
 only part of the project every judge experiences, so it is the specification, and
 every feature that does not appear in it is optional by definition.
 
@@ -44,7 +44,7 @@ The aha moment has four properties. Drop one and it stops working:
 
 - **Visible.** It happens on screen, not in a log, not in your description of it.
 - **Fast.** Under five seconds from action to reaction. Anything slower needs a
-  progress affordance that is itself interesting to watch — a stream of steps, a
+  progress affordance that is itself interesting to watch, a stream of steps, a
   trace filling in, a counter moving.
 - **Unexpected.** The judge could not have predicted the exact output. Determinism is
   invisible; watching a machine decide is not.
@@ -69,7 +69,7 @@ The fix is almost always a panel:
 | Any long job | A trace that streams, not a spinner that spins |
 
 A spinner is the single most expensive UI element in a hackathon demo: it converts
-your hardest work into dead air. Anything that streams — steps, tokens, logs, rows —
+your hardest work into dead air. Anything that streams (steps, tokens, logs, rows)
 converts the same wait into the most-watched part of the pitch.
 
 ## Rehearsal
@@ -81,7 +81,7 @@ converts the same wait into the most-watched part of the pitch.
   lost anyway.
 - **Never say "as you can see".** If they can see it, it needs no words. If they
   cannot, more words will not help.
-- **Rehearse the failure line.** "The network is slow — here it is from ten minutes
+- **Rehearse the failure line.** "The network is slow, here it is from ten minutes
   ago", then cut to the recording without pausing. A dead API costs five seconds if
   rehearsed and the whole pitch if not.
 - **Have the recording.** Record the working flow while it works, not while you hope
@@ -103,8 +103,8 @@ Usual suspects:
 
 That last one gets asked at almost every hackathon, and the correct answer is the
 honest one. "The counterparty is scripted; the negotiation logic and settlement are
-real" is a fine answer that costs nothing. "Nothing is hardcoded" — when something
-plainly is — costs the judge's trust in everything else you said, which is far more
+real" is a fine answer that costs nothing. "Nothing is hardcoded", when something
+plainly is, costs the judge's trust in everything else you said, which is far more
 expensive than the point you were protecting.
 
 ## The two-sentence version

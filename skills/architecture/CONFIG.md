@@ -1,4 +1,4 @@
-# Architecture skill — customization
+# Architecture skill customization
 
 Edit this file, not the skill body. `SKILL.md` reads these values and adapts the stack
 it picks, the seams it draws, the lanes it assigns and the build order it emits.
@@ -13,7 +13,7 @@ that is correct for most hacks.
 components:
   frontend:        true
   backend:         route-handlers  # route-handlers | separate-service | none
-  database:        postgres        # postgres | sqlite | none — none is a real answer
+  database:        postgres        # postgres | sqlite | none, none is a real answer
   agent:           false           # true => references/agent-architecture.md applies
   onchain:         false           # true => references/onchain-architecture.md applies
   realtime:        none            # none | sse | websocket | polling
@@ -22,7 +22,7 @@ components:
 
 # ── Stack ───────────────────────────────────────────────────────────────────
 stack:
-  runtime:         node            # node | python | both — "both" costs a lane
+  runtime:         node            # node | python | both, "both" costs a lane
   framework:       next-app
   orm:             auto            # drizzle | prisma | none. auto => what the team knows
   contracts:       none            # foundry | hardhat | none
@@ -41,7 +41,7 @@ deploy:
   host:            vercel          # vercel | railway | fly | render | none (local demo)
   db_host:         supabase        # supabase | neon | railway | local
   worker_host:     none            # railway | fly | none
-  network:         testnet         # testnet | mainnet | local — mainnet needs a reason
+  network:         testnet         # testnet | mainnet | local, mainnet needs a reason
   fn_timeout_s:    auto            # VERIFY against the host. drives the timeout budget
 
 # ── Demo reliability ────────────────────────────────────────────────────────
@@ -72,13 +72,13 @@ time:
 | `deploy.fn_timeout_s` | Any operation over it must be a job, not a request. Drives the timeout budget table |
 | `demo.fixtures: required` | Every external dependency is generated behind `assets/seam.ts` from the first commit |
 | `demo.offline_safe: true` | No live external call on the critical path; the aha step must run from fixtures |
-| `time.build_hours < 8` | **SALVAGE MODE** — one process, all fixtures, database optional |
+| `time.build_hours < 8` | **SALVAGE MODE**, one process, all fixtures, database optional |
 
 ## The one that is usually wrong
 
 `components.backend`. Teams reach for `separate-service` because that is how production
 systems look. At a hackathon it means two deploys, two sets of env vars, CORS, and a
-second thing that can be down during judging — in exchange for nothing a judge scores.
+second thing that can be down during judging, in exchange for nothing a judge scores.
 
 Choose `separate-service` only when the runtime genuinely differs (Python ML code) or
 when something must run longer than a request. Both of those are `background_jobs` or

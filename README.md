@@ -16,14 +16,14 @@ recon → ideation → architecture → frontend → polish → readme → judge
 | Skill | Covers | Status |
 |---|---|---|
 | [recon](skills/recon/) | Learning the field before ideating: official-source research, running the sponsor quickstarts to verify what works, what is saturated, where the openings are | ready |
-| [ideation](skills/ideation/) | Picking the idea in 60 minutes — the three gates, sponsor prize math, idea shapes that win and lose, scoring, the aha moment | ready |
-| [architecture](skills/architecture/) | The smallest design that survives — default stack, parallel lanes, a fixture behind every dependency, risk-first build order, agent and on-chain boundaries | ready |
+| [ideation](skills/ideation/) | Picking the idea in 60 minutes: the three gates, sponsor prize math, idea shapes that win and lose, scoring, the aha moment | ready |
+| [architecture](skills/architecture/) | The smallest design that survives: default stack, parallel lanes, a fixture behind every dependency, risk-first build order, agent and on-chain boundaries | ready |
 | [frontend](skills/frontend/) | Next.js + Tailwind v4 + shadcn scaffold, design tokens, UI copy, imagery, semantics, the five screen states, motion, demo-proofing, deploy | ready |
 | [polish](skills/polish/) | Making real work discoverable: evidence comments, the evaluation map, technical decisions, and renames gated on a green build and the clock | ready |
 | [readme](skills/readme/) | The judge-facing README and repo surface: the first fifteen lines, sponsor integration sections, evidence, setup that works on a stranger's machine, docs gates | ready |
 | [judge](skills/judge/) | Adversarial review before the real judges: requirements matrix, evidence sweep, four hostile lenses, and a fix list that fits the hours left | ready |
 | [workflow](skills/workflow/) | Running the build across sessions: the drop-in CLAUDE.md, memory and handoff files, what to work on next, scope control, verification | ready |
-| `version-control` | Git under time pressure — branch strategy for 4 people at 3am, commit hygiene that survives judging, recovery from the merge that ate the demo | planned |
+| `version-control` | Git under time pressure: branch strategy for 4 people at 3am, commit hygiene that survives judging, recovery from the merge that ate the demo | planned |
 
 ## Install
 

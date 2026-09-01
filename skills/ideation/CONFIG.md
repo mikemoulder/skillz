@@ -1,9 +1,9 @@
-# Ideation skill — customization
+# Ideation skill customization
 
 Edit this file, not the skill body. `SKILL.md` reads these values and adapts which
 ideas it generates, how it scores them, and how hard it cuts. Anything left at `auto`
 is researched or inferred at ideation time from the hackathon brief. Fill in the
-sponsor block and the rubric if you fill in nothing else — those two change the output
+sponsor block and the rubric if you fill in nothing else, those two change the output
 more than everything below them combined.
 
 ```yaml
@@ -11,7 +11,7 @@ more than everything below them combined.
 hackathon:
   name:            auto
   theme:           auto        # the organizers' words, not your paraphrase
-  url:             auto        # official page — the skill researches from here
+  url:             auto        # official page, the skill researches from here
   tracks:          auto        # list. each track is a separate prize pool
   format:          in-person   # in-person | online | hybrid
   size:            auto        # rough project count. drives how novel you must be
@@ -22,7 +22,7 @@ hackathon:
 sponsors:
   - name:          auto
     tech:          auto        # the SDK/API/chain you would actually integrate
-    prize:         auto        # amount, or "swag" — both are worth knowing
+    prize:         auto        # amount, or "swag", both are worth knowing
     must_use:      false       # true => hard requirement for that track
 target_tracks:     2           # how many prizes to aim at. 2 is right. 4 is a tell.
 
@@ -46,7 +46,7 @@ requires:
 
 # ── Ambition ────────────────────────────────────────────────────────────────
 strategy:
-  risk:            balanced    # safe | balanced | swing — see the table below
+  risk:            balanced    # safe | balanced | swing, see the table below
   domain:          auto        # ai-agents | web3 | devtools | consumer | data | climate | health
   avoid:           auto        # shapes or topics you refuse to build. list.
   novelty_floor:   6           # 1-10. reject ideas scoring under this on novelty
@@ -58,7 +58,7 @@ rubric:
   innovation:      15
   tech_integration: 15
   impact:          15
-  feasibility:     15          # not usually judged — kept because unfinished scores 0
+  feasibility:     15          # not usually judged, kept because unfinished scores 0
 ```
 
 ## How the knobs bite
@@ -67,11 +67,11 @@ rubric:
 |---|---|
 | `sponsors[].must_use: true` | That technology becomes a gate, not a preference. Ideas without it are not generated. |
 | `target_tracks: 2` | The skill looks for the idea that wins two prizes at once, and refuses to bolt on a third integration. |
-| `time.build_hours < 8` | **SALVAGE MODE** — no new ideas, re-frame what already runs. |
+| `time.build_hours < 8` | **SALVAGE MODE**, no new ideas, re-frame what already runs. |
 | `team.new_tech_ok: false` | Every idea must be buildable in `known_stack`. Kills most ambitious proposals, on purpose. |
 | `strategy.risk: safe` | Feasibility weighted double; nothing proposed that the team has not done something close to. |
 | `strategy.risk: swing` | Novelty and technical depth weighted double; feasibility floor drops to 4. Play this only with a strong team and a full clock. |
-| `hackathon.size` large | Novelty floor rises — at 200 projects, three teams have your safe idea. |
+| `hackathon.size` large | Novelty floor rises, at 200 projects, three teams have your safe idea. |
 | `requires.hardware: none` | Physical-device ideas are not generated, however good. |
 | `rubric.*` | Replaces the default scoring weights outright. Score what is actually scored. |
 

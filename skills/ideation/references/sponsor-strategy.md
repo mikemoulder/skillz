@@ -7,7 +7,7 @@ correctly is the single most underrated ideation move.
 ## The prize math
 
 The grand prize attracts every team. A sponsor track attracts the teams that used that
-sponsor — often a small fraction of the field.
+sponsor, often a small fraction of the field.
 
 ```text
 Grand prize    $10,000   /  180 projects   ≈  $56 per project entered
@@ -18,7 +18,7 @@ Those numbers are illustrative, but the ratio is not unusual, and it points the 
 way at almost every event: **expected value is usually higher on sponsor tracks.**
 
 Better still, tracks stack. One project can win a sponsor track, a category track and
-place overall — from a single submission, with a single demo. Aim for the idea that is
+place overall, from a single submission, with a single demo. Aim for the idea that is
 credibly the *best* entry in two tracks, not the twentieth-best in five.
 
 ## How many sponsors to integrate
@@ -35,21 +35,21 @@ so plainly.
 
 ## The integration depth ladder
 
-Sponsor judges — usually engineers from the team that built the thing — are ranking
+Sponsor judges (usually engineers from the team that built the thing) are ranking
 depth, and they can tell which rung you are on in about one question.
 
 | Rung | What it looks like | Sponsor prize odds |
 |---|---|---|
-| 0 — Logo | Named in the README | None |
-| 1 — Call | One API call on a path the demo barely touches | Near zero |
-| 2 — Feature | A real feature depends on it, and works | Occasionally |
-| 3 — Load-bearing | Remove it and the demo stops. It is in the aha moment | Strong |
-| 4 — Beyond spec | You used it for something the sponsor did not anticipate, or hit a real edge of it | Usually wins |
+| 0. Logo | Named in the README | None |
+| 1. Call | One API call on a path the demo barely touches | Near zero |
+| 2. Feature | A real feature depends on it, and works | Occasionally |
+| 3. Load-bearing | Remove it and the demo stops. It is in the aha moment | Strong |
+| 4. Beyond spec | You used it for something the sponsor did not anticipate, or hit a real edge of it | Usually wins |
 
 Rung 4 is more achievable than it sounds and is where the disproportionate returns
 are. It means: you read past the quickstart, you hit something the docs did not cover,
 and you can tell that story. Sponsors remember the team that found the edge of their
-product — that team wrote them a case study for free.
+product, because that team wrote them a case study for free.
 
 **The tell for rung 4:** you can name a specific thing about the SDK that surprised
 you. If you cannot, you are on rung 2 and you should assume the judge will find out.
@@ -86,7 +86,7 @@ is going to a project about agentic payments.
 ## Combining sponsors
 
 The pair that wins is usually **one infrastructure primitive plus one intelligence
-primitive** — something that can decide, joined to something that can settle,
+primitive**, something that can decide, joined to something that can settle,
 verify, sync or persist. The intelligence half makes the demo watchable; the
 infrastructure half makes it a real system rather than a prompt.
 
@@ -95,7 +95,7 @@ Test any pair against one question:
 > Does technology A make technology B *do something new*, or are they just both here?
 
 If they operate on separate screens, you have two integrations and no combination. If
-one calls the other in the aha moment, you have the combination — and that is what
+one calls the other in the aha moment, you have the combination, and that is what
 gets retold.
 
 ## Before you build against a sponsor SDK
@@ -105,7 +105,7 @@ Fifteen minutes of due diligence, in hour one, before the idea is locked:
 ```text
 [ ] Does it work on your platform and language? Check, do not assume
 [ ] Is there a testnet / sandbox / free tier, and how do you get a key
-[ ] How long does approval take? (some keys take days — that kills ideas)
+[ ] How long does approval take? (some keys take days, that kills ideas)
 [ ] Rate limits on the free tier, vs. how often your demo calls it
 [ ] Is the quickstart current? Run it. Right now. Before committing
 [ ] Is there a sponsor engineer at the event or in the Discord? Find them early

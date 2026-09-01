@@ -21,7 +21,7 @@ state two parties must share      anything you can regenerate
 ```
 
 The most common mistake is writing a hash on-chain that nothing ever reads. It looks
-like integration and reads, correctly, as **blockchain theater** — a database with a
+like integration and reads, correctly, as **blockchain theater**: a database with a
 worse latency profile and a gas bill. If you cannot name the party who verifies it and
 the moment they do, take it off-chain.
 
@@ -61,11 +61,11 @@ idle → signing (wallet open) → pending (broadcast, tx hash exists) → confi
 ```
 
 - **Signing** is where the user might reject. That is not an error, it is a normal
-  outcome — never show a red error toast for a rejection.
+  outcome, never show a red error toast for a rejection.
 - **Pending** is dead air on stage. Show the tx hash immediately, linked to the
   explorer, with a spinner attached to it. A visible hash reads as progress; a bare
   spinner reads as broken.
-- **Confirmed** is your aha moment. Make it loud — the explorer link, the balance
+- **Confirmed** is your aha moment. Make it loud: the explorer link, the balance
   changing, the state updating. This is the beat the judge is scoring.
 - **Failed** needs a plain sentence, never a raw revert string. `execution reverted:
   0x...` on a projector costs real points.
@@ -103,7 +103,7 @@ If an agent signs, that is the authorization boundary from
 ask about. Caps and an allowlist enforced in code, not in a prompt.
 
 **Never a private key in the repo.** Not in `.env.example`, not in a comment, not "just
-the testnet one" — testnet keys get pasted into mainnet configs later, and scanners
+the testnet one", testnet keys get pasted into mainnet configs later, and scanners
 find committed keys within minutes.
 
 ## Testnet reality
@@ -120,8 +120,8 @@ Testnets are unreliable in ways mainnet is not, and always at the wrong moment:
   as text too, so the screen is never empty.
 
 The fallback that always works: **a real transaction, sent in advance, with its
-explorer link ready.** If the live send stalls, cut to it — "here is one from ten
-minutes ago" — and keep talking. That is a five-second cost instead of a dead pitch.
+explorer link ready.** If the live send stalls, cut to it ("here is one from ten
+minutes ago") and keep talking. That is a five-second cost instead of a dead pitch.
 
 ## Local development
 
@@ -134,7 +134,7 @@ forge script --broadcast      # deploy to testnet when the logic is settled
 Develop against a local chain, deploy to testnet once the contract stops changing.
 Testnet iteration is slow enough to cost you hours you will not notice losing.
 
-Write down the deployed addresses somewhere shared the moment you deploy — a
+Write down the deployed addresses somewhere shared the moment you deploy, a
 `deployments.json` in the repo. The "which address is the frontend pointing at"
 confusion is a real hour, usually lost at 3am with four people guessing.
 
@@ -151,4 +151,4 @@ Have the answers before Q&A:
 
 That last one is asked constantly and answered badly. Have the explorer link open in a
 tab. A verified contract on a block explorer is concrete proof you built the thing, and
-verifying takes one command — do it while the deploy is fresh, not at hour 35.
+verifying takes one command, do it while the deploy is fresh, not at hour 35.

@@ -2,7 +2,7 @@
 
 Applies when `components.agent: true`. An agent is a loop that calls tools until a
 stop condition. Everything below is about making that loop finish, stay bounded, and
-be watchable — in that order.
+be watchable, in that order.
 
 ## The loop
 
@@ -37,7 +37,7 @@ while (steps < MAX_STEPS && Date.now() < DEADLINE && !done) { ... }
 ```
 
 `MAX_STEPS` around 8 is right for a demo. If your task genuinely needs thirty steps,
-the demo is too long anyway — a judge stops watching at ninety seconds.
+the demo is too long anyway, a judge stops watching at ninety seconds.
 
 ## Tools
 
@@ -55,7 +55,7 @@ export const tools = {
 } satisfies Record<string, Tool>;
 ```
 
-Note the `withFixture` in `execute`. **Every tool goes through the seam** — tools are
+Note the `withFixture` in `execute`. **Every tool goes through the seam**, tools are
 where an agent touches the outside world, so they are exactly where the demo breaks.
 
 Give the model a `finish` tool that takes the final answer. An explicit finish is far
@@ -65,7 +65,7 @@ place to hang the demo's final render.
 ## The authorization boundary
 
 The most important design decision in an agent project that touches money, keys, or
-anything irreversible — and the first thing a sponsor judge asks about.
+anything irreversible, and the first thing a sponsor judge asks about.
 
 > The agent **proposes**. Ordinary code **decides**.
 
@@ -88,7 +88,7 @@ Three properties, all enforced outside the model:
 
 - **Allowlist, not blocklist.** The set of callable things is enumerated by you.
 - **A hard cap** on any amount, checked in code, that the model cannot argue past.
-- **A human confirmation** on anything irreversible — and put that confirmation *on
+- **A human confirmation** on anything irreversible, and put that confirmation *on
   screen*, because "the human approves the transfer" is a good demo beat, not an
   interruption to one. A judge watching you click approve sees a designed system.
 
@@ -99,7 +99,7 @@ be able to point at the line.
 ## Making the loop watchable
 
 An agent that thinks for 40 seconds and prints an answer scores far below the same
-agent that shows its work — this is the single biggest scoring gap in agent projects,
+agent that shows its work, this is the single biggest scoring gap in agent projects,
 and it is a rendering decision, not a modelling one.
 
 Emit an event per step and stream it:
@@ -117,7 +117,7 @@ result, then the result filling in. Showing the tool name before the call is wha
 makes it read as *deciding* rather than *replaying*.
 
 Persist steps as rows. It costs nothing, and it means a judge can scroll back through
-a run that already happened — which is also your fallback when the live run
+a run that already happened, which is also your fallback when the live run
 misbehaves.
 
 ## The timeout problem
@@ -154,8 +154,8 @@ Do not, unless the multiplicity is the point. Two agents that must agree is twic
 failure surface, twice the latency and twice the cost, for a demo that looks the same
 as one agent with more tools.
 
-The exception is when the *interaction itself* is the aha moment — agents negotiating,
-competing, or reviewing each other's work — where the second agent is the product
+The exception is when the *interaction itself* is the aha moment (agents negotiating,
+competing, or reviewing each other's work) where the second agent is the product
 rather than an implementation detail. In that case, keep both loops tiny (3-4 steps
 each), constrain the protocol between them hard, and render the exchange as a
 conversation, because the exchange is what the judge came to see.

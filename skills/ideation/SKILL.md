@@ -1,18 +1,18 @@
 ---
 name: ideation
-description: Find the hackathon idea worth building — pressure-test a vague concept, or generate from a theme, a sponsor stack or a blank slate, then commit to one with a clear aha moment and a demo that fits in three minutes. Use when a hack is starting and there is no idea, when an idea needs a reality check before anyone writes code, when choosing between candidate ideas, when a sponsor track or theme has to be worked into a project, or when the current idea is not landing and it is time to pivot. Read CONFIG.md first.
+description: Find the hackathon idea worth building, pressure-test a vague concept, or generate from a theme, a sponsor stack or a blank slate, then commit to one with a clear aha moment and a demo that fits in three minutes. Use when a hack is starting and there is no idea, when an idea needs a reality check before anyone writes code, when choosing between candidate ideas, when a sponsor track or theme has to be worked into a project, or when the current idea is not landing and it is time to pivot. Read CONFIG.md first.
 ---
 
 # Hackathon ideation
 
 The idea is chosen in the first hour and sets the ceiling on everything after it. No
 amount of execution rescues a project a judge cannot retell. Most teams that lose did
-not lose at 3am — they lost at minute 40, cheerfully, while agreeing on something
+not lose at 3am. They lost at minute 40, cheerfully, while agreeing on something
 reasonable.
 
 **Read `CONFIG.md` before anything else.** The hackathon, the sponsors, the rubric and
 the clock all live there. If it is unfilled, research what you can, infer the rest,
-state your assumptions in one line, and keep moving — never block ideation on a
+state your assumptions in one line, and keep moving. Never block ideation on a
 missing config.
 
 **Per-event config lives in the project, not here.** If the hackathon repo has a `hackathon.yml` at its root, read that first; the values below are defaults. At the start of an event, copy this skill's `CONFIG.md` into a `hackathon.yml` at the project root and edit that copy, so a plugin update never overwrites your settings.
@@ -45,18 +45,18 @@ minute 60 and built for twenty hours beats a better idea decided at minute 240.
 
 ## Two entry paths
 
-**Path A — the user already has an idea.** The common case. Do *not* open with twelve
+**Path A: the user already has an idea.** The common case. Do *not* open with twelve
 alternatives; that reads as ignoring them, and it burns the clock. Run their idea
-through the three gates (step 4) and the one-sentence test — 15 minutes, total.
+through the three gates (step 4) and the one-sentence test, 15 minutes, total.
 Report honestly which gates it passes. Only if it fails two or more do you go wide,
 and say why before you do.
 
-**Path B — blank slate, a theme, or a sponsor stack.** Run the full workflow.
+**Path B: blank slate, a theme, or a sponsor stack.** Run the full workflow.
 
 Either way, do not blindly ratify the first idea. Challenge the weak assumption; the
 point of this skill is the pressure, not the enthusiasm.
 
-## Step 1 — Read the hackathon
+## Step 1: Read the hackathon
 
 Extract and write down, before generating anything:
 
@@ -79,7 +79,7 @@ If it has not run and the sponsor stack is unfamiliar, run it first. Ideas forme
 feature list rather than from understanding are how cosmetic integrations happen, and
 gate 2 kills them anyway.
 
-Otherwise, research this rather than assuming it — sponsor stacks and rubrics change
+Otherwise, research this rather than assuming it. Sponsor stacks and rubrics change
 every event, and last year's guidance is often wrong. Prefer the official hackathon page
 and the sponsors' own docs.
 
@@ -88,19 +88,19 @@ Two things move the odds more than anything else you learn here: **the rubric we
 routinely draw a fraction of the entrants the grand prize does).
 `references/sponsor-strategy.md` has the prize math and the integration ladder.
 
-## Step 2 — Opportunity areas
+## Step 2: Opportunity areas
 
 Five to eight areas, derived from this hackathon's theme and its sponsors' actual
-capabilities — not a canned list. One line each on what the technology newly makes
+capabilities, not a canned list. One line each on what the technology newly makes
 possible there. Cheap step; it stops all twelve ideas landing in the same corner.
 
-## Step 3 — Raw ideas
+## Step 3: Raw ideas
 
-About twelve, mostly one-liners. Breadth beats polish — nothing gets written up
+About twelve, mostly one-liners. Breadth beats polish. Nothing gets written up
 properly until it survives step 4.
 
 ```text
-Name — for [user], [does what], using [tech] to [enable what was hard]
+Name, for [user], [does what], using [tech] to [enable what was hard]
 ```
 
 Deliberately include two or three that feel too ambitious and two that feel too small.
@@ -110,18 +110,18 @@ The highest-yield move here is **the unusual pair**: two available technologies 
 has combined, where the combination is obviously right once stated. Judges reward the
 combination far more than either half.
 
-## Step 4 — The three gates
+## Step 4: The three gates
 
 Every idea faces three questions. **Fail two and it is dead**, no discussion.
 
-### Gate 1 — Why now?
+### Gate 1: Why now?
 
 Why is this worth building *this year*? A strong answer names a newly available
 technology, a newly cheap capability, a new primitive, a new behaviour, or a new
 regulatory reality. If the idea would have made equal sense five years ago, it
 probably is not using anything the hackathon gave you.
 
-### Gate 2 — Why this technology?
+### Gate 2: Why this technology?
 
 > Remove the hackathon's primary technology. Does the project still work?
 
@@ -135,7 +135,7 @@ Cosmetic integrations lose sponsor prizes *specifically*, because the sponsor's 
 engineer is usually the judge and can tell from one question. Ideas built **for** the
 technology beat ideas that had it added.
 
-### Gate 3 — The aha moment
+### Gate 3: The aha moment
 
 Name the single moment a judge understands why this matters. It must be something that
 **happens on screen**, and it must land inside the first 45 seconds of the demo.
@@ -148,16 +148,16 @@ Name the single moment a judge understands why this matters. It must be somethin
 ```
 
 "Users can manage their X" is not an aha moment. If you cannot name one, the idea is
-not weak — it is *unfinished*. Redesign it around a moment, or drop it.
+not weak. It is *unfinished*. Redesign it around a moment, or drop it.
 
-Design the demo now, not later — it is the specification, and every feature outside it
+Design the demo now, not later. It is the specification, and every feature outside it
 is optional by definition. The four questions, the three-minute arc, and how to make
 invisible backend work scoreable: `references/demo-narrative.md`.
 
-## Step 5 — Score the survivors
+## Step 5: Score the survivors
 
 Only the 3-5 gate survivors get scored. Mirror `rubric` from CONFIG when it is filled
-— scoring against the real rubric is the entire point. Default weights:
+, scoring against the real rubric is the entire point. Default weights:
 
 | Axis | Weight | Reading |
 |---|---|---|
@@ -168,7 +168,7 @@ Only the 3-5 gate survivors get scored. Mirror `rubric` from CONFIG when it is f
 | Problem importance | 15% | Does anyone actually have this problem? |
 | Feasibility | 15% | Can *this* team ship it on *this* clock? |
 
-Feasibility is never in a judging rubric and always belongs in yours — an unfinished
+Feasibility is never in a judging rubric and always belongs in yours. An unfinished
 project scores zero on every axis at once.
 
 **Hard gates, applied after the arithmetic:**
@@ -181,22 +181,22 @@ project scores zero on every axis at once.
 8.1 you cannot. Use the score to argue, then use judgment. Full method, adapting to
 odd rubrics, and a worked example: `references/scoring.md`.
 
-## Step 6 — Stress test the top 3
+## Step 6: Stress test the top 3
 
 Five lines each, no more:
 
 ```text
-Technical risk    — the one thing that, if it does not work, kills the project
-Product risk      — the reason it might just not be useful
-Demo risk         — what breaks on stage, on someone else's wifi
-Judge question    — the hardest question they will ask, and your answer
-Simplification    — what you can cut and still keep the aha moment
+Technical risk      the one thing that, if it does not work, kills the project
+Product risk        the reason it might just not be useful
+Demo risk           what breaks on stage, on someone else's wifi
+Judge question      the hardest question they will ask, and your answer
+Simplification      what you can cut and still keep the aha moment
 ```
 
 The judge question is the one teams skip and the one that decides tie-breaks. Write
 the actual answer, not a note to write one later.
 
-## Step 7 — Commit
+## Step 7: Commit
 
 Fill `assets/idea-brief.md`. It is the north star for every later skill, and writing it
 is what surfaces the ambiguity the team was silently disagreeing about.
@@ -220,7 +220,7 @@ are not in.
 | **The compression** | Two hours of work becomes one click, shown side by side |
 | **The live wire** | A real-world event moves something on screen, right now |
 | **The inversion** | The machine does the part a human always had to do |
-| **The visible internal** | Make the invisible legible — the reasoning, the graph, the trace |
+| **The visible internal** | Make the invisible legible, the reasoning, the graph, the trace |
 | **The unusual pair** | Two technologies nobody combined, obviously right in hindsight |
 
 ## Shapes that lose
@@ -250,7 +250,7 @@ second-to-last 10% takes. Anchor the estimate:
 | Yes, recently | 1.5x |
 | Something close | 2x |
 | Read the docs, never shipped it | 3x |
-| New SDK, docs unread | 4x — and prototype the riskiest call in hour one |
+| New SDK, docs unread | 4x, and prototype the riskiest call in hour one |
 | Nobody knows the language | Do not |
 
 **If the estimate exceeds half of `time.build_hours`, cut scope now.** The other half
@@ -300,7 +300,7 @@ Pivots after the halfway mark almost never finish. Re-framing does.
 
 ## Handoff
 
-With the brief filled: `/skillz:frontend` for the judge-facing UI — hand it
+With the brief filled: `/skillz:frontend` for the judge-facing UI, hand it
 `demo.hero_screen` and the aha moment, since those decide the one screen it builds.
 Then `/skillz:readme` for the judge-facing writeup, and `/skillz:version-control`
 for a history that survives a four-person merge at 3am.

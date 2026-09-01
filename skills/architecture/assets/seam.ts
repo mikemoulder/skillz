@@ -1,4 +1,4 @@
-/* The dependency seam — src/lib/seam.ts
+/* The dependency seam: src/lib/seam.ts
  *
  * Every call that leaves your process goes through here. It is the server-side
  * counterpart to skills/frontend/assets/seed.ts (which is the browser→API
@@ -22,9 +22,9 @@
 
 export type DemoMode = "live" | "fixture" | "auto";
 
-/* live    — every call is real. use while building the integration
- * fixture — nothing leaves the process. USE THIS ON STAGE
- * auto    — try live, fall back on failure or timeout. the sane default
+/* live      every call is real. use while building the integration
+ * fixture   nothing leaves the process. USE THIS ON STAGE
+ * auto      try live, fall back on failure or timeout. the sane default
  */
 export const DEMO_MODE: DemoMode = (process.env.DEMO_MODE as DemoMode) || "auto";
 
@@ -69,7 +69,7 @@ export async function withFixture<T>(
       return result;
     } catch (err) {
       lastErr = err;
-      // Do not burn the clock retrying a rate limit or a bad key — neither improves.
+      // Do not burn the clock retrying a rate limit or a bad key, neither improves.
       if (attempt < retries && isRetryable(err)) {
         await sleep(300 * (attempt + 1));
         continue;

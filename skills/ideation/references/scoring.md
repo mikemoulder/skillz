@@ -1,7 +1,7 @@
 # Scoring
 
 Scoring exists to make a group of tired people argue about the right things. It does
-not exist to produce a number. Treat the number as a way to surface disagreement — if
+not exist to produce a number. Treat the number as a way to surface disagreement. If
 two people score the same idea 4 and 9 on feasibility, that gap is the most useful
 thing you will learn in the whole session.
 
@@ -63,15 +63,15 @@ Ideation for an AI-agents hackathon, three survivors, `strategy.risk: balanced`:
 
 | Idea | Demo | Tech | Novelty | Integ | Problem | Feas | Total |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| A — Agent that files your expenses | 6 | 5 | 3 | 6 | 8 | 9 | **6.1** |
-| B — Agents negotiating cloud spend live | 9 | 8 | 8 | 9 | 7 | 5 | **7.8** |
-| C — Verifiable audit trail for agent actions | 5 | 9 | 7 | 8 | 6 | 6 | **6.9** |
+| A. Agent that files your expenses | 6 | 5 | 3 | 6 | 8 | 9 | **6.1** |
+| B. Agents negotiating cloud spend live | 9 | 8 | 8 | 9 | 7 | 5 | **7.8** |
+| C. Verifiable audit trail for agent actions | 5 | 9 | 7 | 8 | 6 | 6 | **6.9** |
 
-**A** is the safe idea and it is not close — novelty 3 means several teams have it, and
+**A** is the safe idea and it is not close. Novelty 3 means several teams have it, and
 high feasibility cannot rescue it. This is the classic trap: the idea everyone agrees
 on quickly, because it is obvious, because it is not novel.
 
-**C** is the strongest engineering and the weakest demo — the work is invisible. Rescue
+**C** is the strongest engineering and the weakest demo. The work is invisible. Rescue
 it with the visible internal (render the audit trail as it is written, live) and the
 demo score moves to 7, taking the total past B. Note what that means: the *idea* did
 not change, the *demo* did. This is the highest-return kind of fix available during
