@@ -1,6 +1,6 @@
 # Hackathon Skills
 
-A customizable set of Claude Code skills for winning hackathons. Each skill is a
+A Claude Code plugin: nine skills for winning hackathons. Each skill is a
 directory with a `SKILL.md` (the instructions Claude follows), a `CONFIG.md` (the
 knobs you edit), plus `references/` for depth and `assets/` for drop-in code.
 
@@ -15,44 +15,74 @@ recon → ideation → architecture → frontend → polish → readme → judge
 
 | Skill | Covers | Status |
 |---|---|---|
-| [hackathon-recon](hackathon-recon/) | Learning the field before ideating: official-source research, running the sponsor quickstarts to verify what works, what is saturated, where the openings are | ready |
-| [hackathon-ideation](hackathon-ideation/) | Picking the idea in 60 minutes — the three gates, sponsor prize math, idea shapes that win and lose, scoring, the aha moment | ready |
-| [hackathon-architecture](hackathon-architecture/) | The smallest design that survives — default stack, parallel lanes, a fixture behind every dependency, risk-first build order, agent and on-chain boundaries | ready |
-| [hackathon-frontend](hackathon-frontend/) | Next.js + Tailwind v4 + shadcn scaffold, design tokens, UI copy, imagery, semantics, the five screen states, motion, demo-proofing, deploy | ready |
-| [hackathon-polish](hackathon-polish/) | Making real work discoverable: evidence comments, the evaluation map, technical decisions, and renames gated on a green build and the clock | ready |
-| [hackathon-readme](hackathon-readme/) | The judge-facing README and repo surface: the first fifteen lines, sponsor integration sections, evidence, setup that works on a stranger's machine, docs gates | ready |
-| [hackathon-judge](hackathon-judge/) | Adversarial review before the real judges: requirements matrix, evidence sweep, four hostile lenses, and a fix list that fits the hours left | ready |
-| [hackathon-workflow](hackathon-workflow/) | Running the build across sessions: the drop-in CLAUDE.md, memory and handoff files, what to work on next, scope control, verification | ready |
-| `hackathon-version-control` | Git under time pressure — branch strategy for 4 people at 3am, commit hygiene that survives judging, recovery from the merge that ate the demo | planned |
+| [recon](skills/recon/) | Learning the field before ideating: official-source research, running the sponsor quickstarts to verify what works, what is saturated, where the openings are | ready |
+| [ideation](skills/ideation/) | Picking the idea in 60 minutes — the three gates, sponsor prize math, idea shapes that win and lose, scoring, the aha moment | ready |
+| [architecture](skills/architecture/) | The smallest design that survives — default stack, parallel lanes, a fixture behind every dependency, risk-first build order, agent and on-chain boundaries | ready |
+| [frontend](skills/frontend/) | Next.js + Tailwind v4 + shadcn scaffold, design tokens, UI copy, imagery, semantics, the five screen states, motion, demo-proofing, deploy | ready |
+| [polish](skills/polish/) | Making real work discoverable: evidence comments, the evaluation map, technical decisions, and renames gated on a green build and the clock | ready |
+| [readme](skills/readme/) | The judge-facing README and repo surface: the first fifteen lines, sponsor integration sections, evidence, setup that works on a stranger's machine, docs gates | ready |
+| [judge](skills/judge/) | Adversarial review before the real judges: requirements matrix, evidence sweep, four hostile lenses, and a fix list that fits the hours left | ready |
+| [workflow](skills/workflow/) | Running the build across sessions: the drop-in CLAUDE.md, memory and handoff files, what to work on next, scope control, verification | ready |
+| `version-control` | Git under time pressure — branch strategy for 4 people at 3am, commit hygiene that survives judging, recovery from the merge that ate the demo | planned |
 
 ## Install
 
-Skills are picked up from `~/.claude/skills/` (all projects) or `.claude/skills/`
-(one project). Symlink rather than copy, so edits here take effect everywhere:
+This repo is a Claude Code plugin marketplace. Two commands:
 
-```bash
-# PowerShell, as Administrator
-New-Item -ItemType SymbolicLink `
-  -Path "$env:USERPROFILE\.claude\skills\hackathon-frontend" `
-  -Target "$PWD\hackathon-frontend"
+```text
+/plugin marketplace add USER/REPO
+/plugin install skillz@skillz
 ```
+
+Then invoke any skill as `/skillz:recon`, `/skillz:ideation`, and so on. Claude also
+loads them on its own when a request matches a skill's description, so you rarely have
+to type them.
+
+Private repos work the same way: add your friends as collaborators and they run the
+same two commands. For quiet auto-updates on a private repo, they need SSH configured
+(`ssh-agent`) or a git credential helper.
+
+Update to the latest version with `/plugin marketplace update skillz`. Pin to a tag
+with `/plugin marketplace add USER/REPO@v1.0`.
+
+### Developing on it
+
+If you are editing the skills, symlink instead so changes take effect live:
 
 ```bash
 # Git Bash / macOS / Linux
-ln -s "$PWD/hackathon-frontend" ~/.claude/skills/hackathon-frontend
+ln -s "$PWD/skills" ~/.claude/skills/skillz
 ```
 
-Restart Claude Code, then confirm it loaded by asking for it by name.
+```powershell
+# PowerShell, as Administrator
+New-Item -ItemType SymbolicLink `
+  -Path "$env:USERPROFILE\.claude\skills\skillz" -Target "$PWD\skills"
+```
 
 ## Customize
 
-**Edit `CONFIG.md`, not `SKILL.md`.** Each skill reads its config first and adapts
-every command, token and component it emits — stack, brand color, demo surface,
-time budget, rubric weights. `SKILL.md` holds the reasoning, which rarely needs to
-change between hacks; `CONFIG.md` holds this weekend's specifics.
+**Do not edit `CONFIG.md` inside the plugin.** A plugin update overwrites it.
 
-Per-hackathon workflow: copy the skill directory, edit `CONFIG.md` for that event,
-point Claude at it. The reasoning stays; the parameters travel.
+At the start of an event, copy the relevant skill's `CONFIG.md` into a `hackathon.yml`
+at the root of your hackathon project and edit that copy. Every skill reads
+`hackathon.yml` first and falls back to its own `CONFIG.md` for defaults.
+
+```bash
+cp ~/.claude/plugins/*/skillz/skills/ideation/CONFIG.md ./hackathon.yml
+```
+
+`SKILL.md` holds the reasoning, which rarely changes between hacks. `hackathon.yml`
+holds this weekend's specifics: sponsors, rubric weights, brand color, demo surface,
+hours remaining. The reasoning stays; the parameters travel.
+
+## How discovery works
+
+Claude Code reads only the YAML frontmatter (`name` and `description`) of every skill
+at session start. The body loads when a request matches, or when you type the command.
+`references/` and `assets/` load only when a skill tells Claude to read one.
+
+So nine skills cost you nine descriptions of context, not nine thousand lines.
 
 ## House rules
 
@@ -75,7 +105,7 @@ project was generated rather than engineered, and it invites scrutiny that costs
 than the marker was ever worth. Neither rule is about concealing tool use. They are
 about not planting a machine-readable authorship claim in the documents being judged.
 
-`hackathon-readme/assets/check-docs.sh` enforces both.
+`skills/readme/assets/check-docs.sh` enforces both.
 
 ## Design principle
 
