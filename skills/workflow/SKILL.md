@@ -28,6 +28,9 @@ project's `CLAUDE.md`, which is read at the start of every session:
 cp <skill>/assets/CLAUDE.md ./CLAUDE.md      # then fill in the project specifics
 ```
 
+`/skillz:lock-and-load` does this for you, along with `handoff.md`, `memory.md`, the
+`.gitignore` and the commit roadmap. If it has run, this step is already done.
+
 Do this in hour one. It carries the working stance, the communication format and the
 verification rule into every session automatically, including sessions that never invoke
 this skill. Without it, the discipline holds only when someone remembers to ask for it,

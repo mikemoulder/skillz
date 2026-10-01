@@ -1,6 +1,6 @@
 # Hackathon Skills
 
-A Claude Code plugin: nine skills for winning hackathons. Each skill is a
+A Claude Code plugin: ten skills for winning hackathons. Each skill is a
 directory with a `SKILL.md` (the instructions Claude follows), a `CONFIG.md` (the
 knobs you edit), plus `references/` for depth and `assets/` for drop-in code.
 
@@ -9,7 +9,7 @@ knobs you edit), plus `references/` for depth and `assets/` for drop-in code.
 Run roughly in this order. Each hands specific artifacts to the next.
 
 ```text
-recon → ideation → architecture → frontend → polish → readme → judge
+recon → ideation → lock-and-load → architecture → frontend → polish → readme → judge
                         ↑______ workflow runs alongside all of them ______↑
 ```
 
@@ -17,6 +17,7 @@ recon → ideation → architecture → frontend → polish → readme → judge
 |---|---|---|
 | [recon](skills/recon/) | Learning the field before ideating: official-source research, running the sponsor quickstarts to verify what works, what is saturated, where the openings are | ready |
 | [ideation](skills/ideation/) | Picking the idea in 60 minutes: the three gates, sponsor prize math, idea shapes that win and lose, scoring, the aha moment | ready |
+| [lock-and-load](skills/lock-and-load/) | Initializing the repo in hour one: git hygiene, CLAUDE.md and the continuity files, and a commit roadmap aimed at a history that reads as sustained engineering | ready |
 | [architecture](skills/architecture/) | The smallest design that survives: default stack, parallel lanes, a fixture behind every dependency, risk-first build order, agent and on-chain boundaries | ready |
 | [frontend](skills/frontend/) | Next.js + Tailwind v4 + shadcn scaffold, design tokens, UI copy, imagery, semantics, the five screen states, motion, demo-proofing, deploy | ready |
 | [polish](skills/polish/) | Making real work discoverable: evidence comments, the evaluation map, technical decisions, and renames gated on a green build and the clock | ready |
@@ -86,7 +87,7 @@ Claude Code reads only the YAML frontmatter (`name` and `description`) of every 
 at session start. The body loads when a request matches, or when you type the command.
 `references/` and `assets/` load only when a skill tells Claude to read one.
 
-So nine skills cost you nine descriptions of context, not nine thousand lines.
+So ten skills cost you ten descriptions of context, not nine thousand lines.
 
 ## House rules
 
