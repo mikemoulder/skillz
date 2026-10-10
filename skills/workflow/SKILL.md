@@ -198,5 +198,5 @@ work is a specific phase, the phase skill owns it:
 
 `/skillz:ideation` for the idea, `/skillz:architecture` for the design and build
 order, `/skillz:frontend` for the UI, `/skillz:readme` for the writeup,
-`/skillz:judge` at the midpoint and again at T minus 6, `/skillz:polish` before the
-freeze.
+`/skillz:demo-video` for the submission video, `/skillz:judge` at the midpoint and
+again at T minus 6, `/skillz:polish` before the freeze.

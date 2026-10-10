@@ -1,6 +1,6 @@
 # Hackathon Skills
 
-A Claude Code plugin: ten skills for winning hackathons. Each skill is a
+A Claude Code plugin: eleven skills for winning hackathons. Each skill is a
 directory with a `SKILL.md` (the instructions Claude follows), a `CONFIG.md` (the
 knobs you edit), plus `references/` for depth and `assets/` for drop-in code.
 
@@ -9,7 +9,7 @@ knobs you edit), plus `references/` for depth and `assets/` for drop-in code.
 Run roughly in this order. Each hands specific artifacts to the next.
 
 ```text
-recon → ideation → lock-and-load → architecture → frontend → polish → readme → judge
+recon → ideation → lock-and-load → architecture → frontend → polish → readme → demo-video → judge
                         ↑______ workflow runs alongside all of them ______↑
 ```
 
@@ -22,6 +22,7 @@ recon → ideation → lock-and-load → architecture → frontend → polish �
 | [frontend](skills/frontend/) | Next.js + Tailwind v4 + shadcn scaffold, design tokens, UI copy, imagery, semantics, the five screen states, motion, demo-proofing, deploy | ready |
 | [polish](skills/polish/) | Making real work discoverable: evidence comments, the evaluation map, technical decisions, and renames gated on a green build and the clock | ready |
 | [readme](skills/readme/) | The judge-facing README and repo surface: the first fifteen lines, sponsor integration sections, evidence, setup that works on a stranger's machine, docs gates | ready |
+| [demo-video](skills/demo-video/) | The narrated demo film: fetches the cinetic film skill to direct it, voices the script with Gemini TTS (Charon), cuts real product footage to the voice, mixes and masters, captions and uploads | ready |
 | [judge](skills/judge/) | Adversarial review before the real judges: requirements matrix, evidence sweep, four hostile lenses, and a fix list that fits the hours left | ready |
 | [workflow](skills/workflow/) | Running the build across sessions: the drop-in CLAUDE.md, memory and handoff files, what to work on next, scope control, verification | ready |
 | `version-control` | Git under time pressure: branch strategy for 4 people at 3am, commit hygiene that survives judging, recovery from the merge that ate the demo | planned |
@@ -65,6 +66,15 @@ New-Item -ItemType SymbolicLink `
   -Path "$env:USERPROFILE\.claude\skills\skillz" -Target "$PWD\skills"
 ```
 
+### What demo-video needs
+
+`demo-video` drives two outside pieces. It fetches [cinetic](https://github.com/Leonxlnx/cinetic)
+(MIT), pinned to a tag, to direct the film; cinetic needs Node 22+, ffmpeg 6+, Python 3.11+
+with its audio packages, and macOS, Linux or WSL2. The narration uses Gemini TTS, so set
+`GEMINI_API_KEY` (a Google AI Studio key) in your environment or in the hackathon project's
+gitignored `.env.local`. Never put the key in this repo. Run
+`bash skills/demo-video/assets/setup.sh --check` to see what is missing.
+
 ## Customize
 
 **Do not edit `CONFIG.md` inside the plugin.** A plugin update overwrites it.
@@ -87,7 +97,7 @@ Claude Code reads only the YAML frontmatter (`name` and `description`) of every 
 at session start. The body loads when a request matches, or when you type the command.
 `references/` and `assets/` load only when a skill tells Claude to read one.
 
-So ten skills cost you ten descriptions of context, not nine thousand lines.
+So eleven skills cost you eleven descriptions of context, not nine thousand lines.
 
 ## House rules
 

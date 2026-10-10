@@ -1,0 +1,34 @@
+{
+  "voice": "Charon",
+  "model": "gemini-3.8-flash-tts",
+  "style": "speaking slowly and clearly, a calm, confident product walkthrough narrator: warm but never salesy, like an engineer showing a colleague something that works",
+  "target_seconds": 120,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "Every refund at a corner shop is a phone call and a spreadsheet."
+    },
+    {
+      "id": "oneliner",
+      "text": "Tally settles them in one tap, on x402.",
+      "say": "Tally settles them in one tap, on x four oh two."
+    },
+    {
+      "id": "aha",
+      "text": "Watch the balance on the left. The refund lands before the customer has put their phone away.",
+      "style": "speaking slowly and clearly, the same calm narrator a touch brighter: this is the payoff"
+    },
+    {
+      "id": "how",
+      "text": "Under the hood, an agent reads the receipt, checks the policy and signs the transfer. Every step shows up in the trace as it happens."
+    },
+    {
+      "id": "sponsor",
+      "text": "The transfer itself is a USDC payment on Base, and the receipt links straight to the explorer."
+    },
+    {
+      "id": "close",
+      "text": "Tally. Refunds that settle while the customer is still at the counter."
+    }
+  ]
+}

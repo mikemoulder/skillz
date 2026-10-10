@@ -53,7 +53,9 @@ are guaranteed to have working software.
 - Under 2 minutes. Most judges stop at 90 seconds.
 - Open with the product running, not with slides or a title card.
 - Say the one liner in the first sentence, then show the aha moment.
-- Screen recording with voice over is fine. Production value scores nothing.
+- Screen recording with voice over is fine. Production value scores nothing on its own;
+  what it buys is legibility. `/skillz:demo-video` makes a directed, narrated cut of the
+  real product once this raw recording exists.
 - Unlisted is fine; **private is not.** Verify the link works while logged out, in a
   private window. A permission wall on a submission video is a common and total loss.
 

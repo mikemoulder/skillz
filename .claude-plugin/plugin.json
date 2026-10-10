@@ -1,7 +1,7 @@
 {
   "name": "skillz",
-  "description": "Ten skills for winning hackathons: recon, ideation, lock-and-load, architecture, frontend, polish, readme, judge, and the workflow that runs across sessions.",
-  "version": "1.1.0",
+  "description": "Eleven skills for winning hackathons: recon, ideation, lock-and-load, architecture, frontend, polish, readme, demo-video, judge, and the workflow that runs across sessions.",
+  "version": "1.2.0",
   "author": {
     "name": "xero"
   }
