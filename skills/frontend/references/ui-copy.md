@@ -58,6 +58,57 @@ Two mechanical rules that carry most of the improvement:
 - **No exclamation marks.** Not one. They read as nervous, and every place you want one
   is a place the sentence should be more specific instead.
 
+## Landing page copy
+
+A landing page has five kinds of string, and each has a job.
+
+### The hero headline
+
+Name the outcome in plain words, in two lines or fewer. Write five, keep one; the first
+is almost always the category headline.
+
+| Category headline (cut) | Product headline (keep) |
+|---|---|
+| "The future of private payments" | "Private money on public chains" (Gloam) |
+| "Modern spend management for teams" | "Work money that's actually yours" (Teampot) |
+| "AI-powered inspections" | "Speak the walk-through. The report writes itself." |
+
+Patterns that work: the outcome stated flatly ("Private money on public chains"); the
+claim with possession ("Work money that's actually yours"); the action and its result in
+two short sentences ("Speak the walk-through. The report writes itself.").
+
+### The lead line
+
+One sentence under the headline: for whom, what they do with it, the one detail that
+makes it true. "For people and teams paid in stablecoins, and the agents that work for
+them. Hold, pay and get paid without putting amounts or balances on the public record."
+
+### Section claims
+
+Section headings are claims, not labels. A label names a category; a claim says
+something a skeptic could disagree with.
+
+| Label (cut) | Claim (keep) |
+|---|---|
+| Features | Everything work pays you, in one place |
+| Security | Rules that hold even if the app doesn't |
+| How it works | A payment has one owner. Nobody else should hold the key. |
+| Use cases | Built for money that should not be public |
+
+The thesis line can carry the metaphor: "On a public chain, every payment is a postcard.
+Gloam seals the envelope."
+
+### Eyebrows
+
+One to three words that file the section: "The app", "Built on Tempo", "For developers
+and agents". Never a slogan.
+
+### Proof lines
+
+Every claim gets a line that can be checked, with a link: "See what's verified", "Verify
+the contracts", "How Gloam compares". Honest caveats belong here too, said plainly once:
+"Testnet. Test money only." Never claim "first", "only", or a number nobody measured.
+
 ## Per element
 
 ### Page title
@@ -180,6 +231,8 @@ When a string does not fit, the answer is almost never a smaller font. It is a s
 sentence.
 
 ## Before the demo
+
+`bash <skill>/assets/slop-check.sh src` runs these and more. By hand:
 
 ```bash
 grep -rn $'\xe2\x80\x94' src/ --include='*.tsx'                    # em dashes

@@ -1,8 +1,11 @@
 # Scaffold
 
-## Step 0: establish ground truth
+Next.js App Router, Tailwind v4, the skill's tokens and primitives. No component library's
+default look: behavior primitives are fine, their styling is replaced by the tokens.
 
-Never trust a remembered version number. Read what you actually got:
+## Ground truth first
+
+Never trust a remembered version number. Read what is installed:
 
 ```bash
 npm ls next react tailwindcss 2>/dev/null | head -5
@@ -10,133 +13,173 @@ ls src/app/globals.css tailwind.config.* postcss.config.* components.json 2>/dev
 head -3 src/app/globals.css
 ```
 
-| Signal | Tailwind version | What that means |
+| Signal | Tailwind | Meaning |
 |---|---|---|
-| `@import "tailwindcss";` at top of globals.css | **v4** | Theme in CSS, `@theme inline`, no config file. Use `assets/globals.css` as-is. |
-| `@tailwind base;` + a `tailwind.config.ts` | **v3** | Theme in JS, HSL triplets. See the v3 fallback below. |
-| Neither | not installed | `npx shadcn@latest init` and let it install. |
+| `@import "tailwindcss";` at the top of globals.css, no config file | v4 | theme in CSS. `assets/globals.css` works as is |
+| `@tailwind base;` and a `tailwind.config.ts` | v3 | see the v3 section below |
+| neither | none | install v4 with create-next-app |
 
-## Fresh project
+Recent create-next-app versions may wire Tailwind through a bundler loader
+(`@tailwindcss/turbopack` in `next.config.ts`) instead of `postcss.config.mjs`, and may
+ship an `AGENTS.md` saying the bundled docs in `node_modules/next/dist/docs/` are the
+truth for that version. Read them when an API looks unfamiliar. The `@import
+"tailwindcss"` test above holds either way.
+
+## A fresh project
 
 ```bash
 npx create-next-app@latest APP --ts --tailwind --app --eslint --src-dir --use-npm
 cd APP
-npx shadcn@latest init          # pick the neutral base; accent comes from CONFIG
-npx shadcn@latest add button card input badge skeleton sonner dialog dropdown-menu tabs
-npm i lucide-react motion
+npm i sonner                     # toasts, used by states.tsx
+npm i lucide-react               # only if the direction uses lucide icons
+npm i motion                     # only for layout animations (tab indicators, sheets)
 ```
 
-Then, in order:
+Then copy the skill's files in:
 
 ```bash
-cp <skill>/assets/globals.css   src/app/globals.css
-cp <skill>/assets/app-shell.tsx src/components/app-shell.tsx
-cp <skill>/assets/states.tsx    src/components/states.tsx
-cp <skill>/assets/seed.ts       src/lib/data.ts
-npm run dev
+SKILL=<path to skills/frontend>
+cp $SKILL/assets/globals.css        src/app/globals.css
+mkdir -p src/components src/lib src/app/system
+cp $SKILL/assets/primitives.tsx     src/components/primitives.tsx
+cp $SKILL/assets/motion.tsx         src/components/motion.tsx
+cp $SKILL/assets/states.tsx         src/components/states.tsx
+cp $SKILL/assets/seed.ts            src/lib/data.ts
+cp $SKILL/assets/system-page.tsx    src/app/system/page.tsx
+cp $SKILL/assets/DESIGN.template.md DESIGN.md        # if the engine has not run yet
 ```
 
-Edit exactly one line before you write a feature: `--brand` in `globals.css`.
+Paste the chosen direction's token block over the `TOKENS:START` to `TOKENS:END` region
+of `globals.css`, set the accent, and load the fonts.
 
-## Root layout
+## The root layout
 
 ```tsx
 // src/app/layout.tsx
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Toaster } from "@/components/ui/sonner";
+/*
+THESIS      Fieldnote is a spoken inspection that becomes a signed report; it refuses the clipboard dashboard.
+WORLD       grey ground, Inter Tight 500, white tiles, black pills; safety orange means a hazard, nothing else.
+STORY       hook with the live report, three steps, three real inspections, the hazard path, the close.
+FIRST VIEW  two-line statement, one sentence, record + demo, the live stage cropped by the fold.
+SIGNATURE   the transcript turning into report rows, the hazard row lighting orange.
+REFUSES     dashboards, stock photos of hard hats, a gradient anywhere.
+*/
+import type { Metadata, Viewport } from "next";
+import { Inter_Tight, Geist_Mono } from "next/font/google";
+import { MOTION_BOOT, MotionRoot } from "@/components/motion";
+import { Toaster } from "@/components/states";
 import "./globals.css";
 
-const sans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const mono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const sans = Inter_Tight({ subsets: ["latin"], variable: "--font-brand-sans", display: "swap" });
+const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-brand-mono", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "PROJECT: TAGLINE",     // CONFIG project_name / tagline
-  description: "TAGLINE",
-  openGraph: { title: "PROJECT", description: "TAGLINE", images: ["/og.png"] },
+  metadataBase: new URL("https://fieldnote.example"),
+  title: { default: "Fieldnote: speak the walk-through", template: "%s | Fieldnote" },
+  description: "Say your site inspection out loud. Fieldnote writes the signed report and flags every hazard.",
+  openGraph: { type: "website", siteName: "Fieldnote" },
+  twitter: { card: "summary_large_image" },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export const viewport: Viewport = { themeColor: "#F5F5F5" };
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    // "dark" here = CONFIG brand.mode: dark-first. Add "projector" for stage.
-    <html lang="en" className="dark">
-      <body className={`${sans.variable} ${mono.variable}`}>
+    // data-theme="dark" for dark-first directions; add "projector" to className on stage
+    <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: MOTION_BOOT }} />
+      </head>
+      <body>
+        <MotionRoot />
         {children}
-        <Toaster richColors position="top-center" />
+        <Toaster />
       </body>
     </html>
   );
 }
 ```
 
-`og.png` at 1200x630 in `/public` takes five minutes and makes every link you
-paste into Slack, Devpost and the judging sheet look like a real product. Do it.
+The thesis comment is DESIGN.md section 0. It costs nothing and it is the first thing the
+next session, or a judge reading the code, sees.
+
+Pages: `src/app/opengraph-image.tsx` (imagery.md), `src/app/icon.svg` for the favicon,
+and `export const metadata` per route.
 
 ## Directory shape
 
-Flat. A hackathon does not survive a clever architecture.
-
-```
+```text
+DESIGN.md                    the imagination engine's output. read before every UI change
 src/
   app/
     layout.tsx
-    page.tsx              <- the hero screen. build this one properly.
-    [feature]/page.tsx    <- at most CONFIG demo.screens_max - 1 of these
-    api/items/route.ts    <- only if you actually have a backend
+    page.tsx                 the landing page, or the hero screen
+    system/page.tsx          the system sheet (noindex)
+    opengraph-image.tsx
+    icon.svg
+    [route]/page.tsx         product screens, at most CONFIG demo.screens_max
   components/
-    app-shell.tsx
-    states.tsx
-    ui/                   <- shadcn, do not hand-edit
-    [feature]-card.tsx
+    primitives.tsx           Container, Section, Heading, Button, Surface, RuledColumns...
+    motion.tsx               Reveal, LineArt, Marquee, CountUp, PauseOffscreen
+    states.tsx               the five states, Toaster
+    landing/                 one file per section: hero.tsx, signature.tsx, proof.tsx...
+    product/                 the real product components the landing page also renders
   lib/
-    data.ts               <- SEED + the swap seam. the important file.
-    utils.ts
+    data.ts                  seed data and the swap seam
+  fonts/                     local font files, if any
 ```
 
-Rules that pay off:
+One file per landing section keeps the storyboard visible in the file tree. The landing
+page imports the same product components as the app, which is what makes the mocks real.
 
-- **No `components/common/`, no `hooks/` until you have three of something.**
-  Premature structure costs more than duplication at this timescale.
-- **One file per screen until it exceeds ~200 lines.** Then extract the card,
-  not the "logic".
-- **Server components by default.** Add `"use client"` only when a file uses
-  state, effects or event handlers. If a page is slow to iterate on, it is
-  usually because a client boundary sits too high in the tree.
+## Component libraries
 
-## Tailwind v3 fallback
+`assets/primitives.tsx` covers layout, type, buttons, surfaces and open content. For
+behavior that is genuinely hard (dialogs, menus, popovers, tooltips, comboboxes), use
+Radix primitives directly and style them with the tokens:
 
-If you inherited a v3 project and cannot upgrade in the time available, do not
-fight it. Keep the shadcn HSL-triplet convention:
-
-```css
-/* globals.css */
-@tailwind base; @tailwind components; @tailwind utilities;
-@layer base {
-  :root   { --primary: 243 75% 59%; --background: 0 0% 100%; --foreground: 222 47% 11%; }
-  .dark   { --primary: 245 80% 68%; --background: 222 47% 8%;  --foreground: 210 40% 98%; }
-}
+```bash
+npm i @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-tooltip
 ```
 
-```ts
-// tailwind.config.ts
-theme: { extend: { colors: {
-  primary: "hsl(var(--primary))",
-  background: "hsl(var(--background))",
-  foreground: "hsl(var(--foreground))",
-}}}
-```
+shadcn/ui works too, with two cautions. `npx shadcn init` rewrites `globals.css` with its
+own tokens, so run it before copying the skill's `globals.css`, or not at all (`npx shadcn
+add` works without it if `components.json` exists). And its components use token names
+this system does not define. Replace them in each generated file:
 
-Note the triplets are bare `H S% L%` with no `hsl()` wrapper. That is what
-lets `bg-primary/50` opacity modifiers work. Everything else in this skill
-(the five states, the shell, the seed seam, the checklists) is version-agnostic.
+| shadcn class | Token class |
+|---|---|
+| `bg-background` | `bg-ground` |
+| `text-foreground` | `text-fg` |
+| `text-muted-foreground` | `text-fg-mute` |
+| `bg-muted` | `bg-fill` |
+| `bg-accent` (hover background) | `bg-fill` (not `bg-accent`, which is the brand accent here) |
+| `bg-primary` / `text-primary-foreground` | `bg-action` / `text-on-action` |
+| `bg-card`, `bg-popover` | `bg-panel` |
+| `border-input`, `border` | `border-line-strong`, `border-line` |
+| `ring-ring` | `ring-focus` |
+| `bg-destructive` | `bg-danger` |
+| `rounded-md`, `rounded-lg` | `rounded-input`, `rounded-tile` |
+| `shadow-md`, `shadow-lg` | `shadow-pop` |
 
-## Alternate stacks
+The default palette and shadow scale are removed in `globals.css`, so an unconverted class
+renders nothing, and `slop-check.sh` lists every one.
 
-| Situation | Use instead | Why |
+## Tailwind v3
+
+Upgrade if there is any time: `npx @tailwindcss/upgrade` handles most projects in minutes.
+If not, keep the token blocks as plain CSS (`:root` and `[data-theme="dark"]` work in
+any CSS), map the colors in `tailwind.config.ts` under `theme.extend.colors` as
+`ground: "var(--ground)"` and so on, map radii under `theme.extend.borderRadius`, and turn
+each `@utility t-...` block into a class inside `@layer components`. Opacity modifiers
+(`bg-fg/50`) will not work on hex variables in v3; use the four text strengths instead.
+
+## Other stacks
+
+| Situation | Use | Change |
 |---|---|---|
-| Pure client demo, no API, no auth | `npm create vite@latest app -- --template react-ts` | ~2s HMR vs Next's cold compile. Meaningful over 12 hours. |
-| Judges will read code, backend is Python | Next frontend + separate FastAPI | Do not force API routes to proxy a service you already have. |
-| Team has one frontend dev and it is not you | Whatever they already know | Familiarity beats every advantage on this list. |
+| Pure client demo, no server | Vite + React + Tailwind v4 | in `primitives.tsx`, replace `next/link` with `<a>`; load fonts with `@fontsource/*` |
+| An existing app in another framework | keep it | port `globals.css` as is; the primitives are plain JSX and port in minutes |
+| A static landing page only | Next with `output: "export"` or Astro | the CSS and the patterns carry over unchanged |
 
-Do not switch stacks after hour 2. The switch always costs more than the
-problem it solves.
+Do not switch stacks after hour two. The switch always costs more than the problem.

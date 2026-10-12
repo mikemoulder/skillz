@@ -7,7 +7,7 @@
  * This is also what makes CONFIG demo.offline_safe true.
  *
  * Rules for seed data:
- *   - Plausible. Judges read it. "Test User 1" says you did not think about
+ *   - Plausible. Judges read it. A placeholder name says you did not think about
  *     the problem; a realistic row says you did.
  *   - Include the ugly cases: a very long name, a zero, a failure, a null.
  *     If the layout survives your seed, it survives the demo.

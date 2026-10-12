@@ -19,7 +19,7 @@ recon → ideation → lock-and-load → architecture → frontend → polish �
 | [ideation](skills/ideation/) | Picking the idea in 60 minutes: the three gates, sponsor prize math, idea shapes that win and lose, scoring, the aha moment | ready |
 | [lock-and-load](skills/lock-and-load/) | Initializing the repo in hour one: git hygiene, CLAUDE.md and the continuity files, and a commit roadmap aimed at a history that reads as sustained engineering | ready |
 | [architecture](skills/architecture/) | The smallest design that survives: default stack, parallel lanes, a fixture behind every dependency, risk-first build order, agent and on-chain boundaries | ready |
-| [frontend](skills/frontend/) | Next.js + Tailwind v4 + shadcn scaffold, design tokens, UI copy, imagery, semantics, the five screen states, motion, demo-proofing, deploy | ready |
+| [frontend](skills/frontend/) | Startup-grade UI without the AI look: an imagination engine that designs the page before any code, six measured visual directions with paste-in tokens, calibration against real sites, primitives, the five states, motion, a screenshot critique loop and a slop audit | ready |
 | [polish](skills/polish/) | Making real work discoverable: evidence comments, the evaluation map, technical decisions, and renames gated on a green build and the clock | ready |
 | [readme](skills/readme/) | The judge-facing README and repo surface: the first fifteen lines, sponsor integration sections, evidence, setup that works on a stranger's machine, docs gates | ready |
 | [demo-video](skills/demo-video/) | The narrated demo film: fetches the cinetic film skill to direct it, voices the script with Gemini TTS (Charon), cuts real product footage to the voice, mixes and masters, captions and uploads | ready |
@@ -74,6 +74,13 @@ with its audio packages, and macOS, Linux or WSL2. The narration uses Gemini TTS
 `GEMINI_API_KEY` (a Google AI Studio key) in your environment or in the hackathon project's
 gitignored `.env.local`. Never put the key in this repo. Run
 `bash skills/demo-video/assets/setup.sh --check` to see what is missing.
+
+### What frontend needs
+
+Node 20+ for the Next.js build. The calibration and critique steps shoot pages with
+Playwright: `npm i -D playwright && npx playwright install chromium`, once, in the project
+or anywhere above it. Without it, `assets/measure.js` still runs pasted into a browser
+console, and `assets/slop-check.sh` needs only bash and grep.
 
 ## Customize
 

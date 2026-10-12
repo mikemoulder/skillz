@@ -1,250 +1,310 @@
 ---
 name: frontend
-description: Build the judge-facing frontend of a hackathon project fast: Next.js App Router + Tailwind v4 + shadcn/ui, with a demo-proof design system, the five screen states, and a deploy that lands before the deadline. Use when scaffolding or polishing a hackathon UI, when asked to "make it look good for judges", when a demo screen needs empty/loading/error states, when picking colors/typography/motion under time pressure, or when a hack has hours left and the frontend must be triaged. Read CONFIG.md first.
+description: Design and build a startup-grade frontend that does not look AI generated, for a landing page, a product UI or both. Runs an imagination engine before any code (distill the product, find its signature visual, pick a direction, storyboard the page, wireframe the first screen, write the token system), calibrates against measured reference sites, builds on Next.js + Tailwind v4 with tokens, primitives, motion and the five screen states, then closes with a screenshot critique loop and an automated slop audit. Use when scaffolding, designing or redesigning a hackathon UI or landing page, when asked to make it look professional, premium or like a real startup, when a UI looks generic, templated or AI made, when choosing type, color, layout, cards, nav, footer or motion, when given reference sites to learn from, or when the frontend must be triaged with hours left. Read CONFIG.md first.
 ---
 
-# Hackathon frontend
+# Frontend
 
-The frontend is the only part of your hack the judges actually experience. They will
-not read your code. They will look at one screen for about ten seconds and decide
-whether you are serious. Build for that.
+Judges, users and investors decide whether a product is serious in about ten seconds, from
+one screen. The hackathon projects that win now ship frontends that look like funded
+startups. This skill is calibrated against two of them, measured: [Teampot](https://teampot.vercel.app)
+(quiet, monochrome, the product in a phone) and [Gloam](https://gloam.trade) (graphite,
+light type, a luminous field, payments that seal as they pass). Neither looks like a
+template, and neither got there by styling components one at a time.
 
-**Read `CONFIG.md` before anything else.** Every command below adapts to it. If the
-user has not filled it in, fill in what you can infer from the brief and repo, state
-your assumptions in one line, and keep moving. Do not block on it.
+Three engines do the work:
 
-**Per-event config lives in the project, not here.** If the hackathon repo has a `hackathon.yml` at its root, read that first; the values below are defaults. At the start of an event, copy this skill's `CONFIG.md` into a `hackathon.yml` at the project root and edit that copy, so a plugin update never overwrites your settings.
+1. **The imagination engine** designs the whole page in words and boxes before code, and
+   writes `DESIGN.md`.
+2. **The system** turns those decisions into tokens and primitives, so every component
+   inherits them and nothing is styled on its own.
+3. **The critique loop** screenshots the build at real widths, measures it, scores it,
+   scans it for slop, and fixes it until it passes.
+
+**Read `CONFIG.md` before anything else.** If the hackathon repo has a `hackathon.yml` at
+its root, read that first; the values in `CONFIG.md` are defaults. Fill what you can infer
+from the brief and the repo, state your assumptions in one line, and keep moving.
 
 ## The rule that governs everything
 
-> One screen, perfect. Not four screens, decent.
+> Decide everything once, then build. Slop is what you get when every component is
+> designed on its own.
 
-A hackathon demo is a *guided tour of a single artifact*. Every hour spent on the
-second screen is an hour not spent making the first one indefensible. When
-`demo.screens_max` is hit, the answer is to cut, not to compress.
+A model asked for a landing page writes the most probable one: each section the average of
+every section like it. Averages of averages are exactly what "generic" means. Better
+components do not fix that. One idea, written down before the first component, that
+every component must answer to, does.
 
-## Build order (do not reorder)
+## Build order
 
 | # | Phase | Wall clock | Done when |
 |---|---|---|---|
-| 1 | Scaffold + deploy a blank page | 20 min | A public URL exists. **Deploy before you build.** |
-| 2 | Design tokens + layout shell | 30 min | Nav, container, spacing scale, one accent locked. **Ask the user for images here**, not at hour 30 |
-| 3 | Hero screen with **hardcoded** data | 90 min | It looks finished and is a lie |
-| 4 | Wire real data behind the same components | 60 min | The lie became true, nothing moved visually |
-| 5 | The five states | 45 min | Empty, loading, error, partial, success all exist |
-| 6 | Motion + polish pass | 30 min | Transitions, focus rings, hover, one delight moment |
-| 7 | Demo-proofing | 30 min | Works offline, on a projector, on a cold load |
+| 0 | Deploy a blank page | 20 min | A public URL exists. **Deploy before you build** |
+| 1 | Imagination engine | 30 to 45 min (fast path 10) | `DESIGN.md` passes its gate |
+| 2 | Tokens, primitives, system sheet | 30 min | `/system` looks like the brand at 1440 and 390 |
+| 3 | First viewport and the signature | 90 min | The hero screenshot passes the squint test and the screenshot sentence |
+| 4 | The rest of the storyboard | 2 to 4 h | Every beat built, with real copy, against seed data |
+| 5 | Real data, the five states, interaction states | 60 to 90 min | Nothing visual moved; every state exists |
+| 6 | Motion pass | 30 min | Within the motion budget, reduced motion honest |
+| 7 | Responsive pass | 45 min | Designed transforms at 375, 768, 1024, 1440 |
+| 8 | Critique loop | 45 to 90 min | Rubric 24/30, nothing below 2, slop-check clean |
+| 9 | Demo-proofing and deploy | 30 min | The deployed URL passes `references/demo-proofing.md` |
 
-Phase 1 first is not optional. Teams that deploy last lose the hack to a build error
-at minute 358. See `references/deploy.md`.
+`time.frontend_hours` under 6 means SALVAGE MODE (below). Phase 0 first is not optional:
+`references/deploy.md`.
 
-Phase 3 before phase 4 is the whole trick: **build the UI against fake data that
-already looks like a successful demo.** If the backend never lands, you still have a
-demo. If it lands, you swap one module.
+## Step 0: Ground truth and a URL
 
-## Scaffold
+Check what is installed before trusting any syntax (`references/scaffold.md`), then deploy
+an empty page. Every later push is a one minute deploy instead of an unknown risk.
 
-```bash
-npx create-next-app@latest APP --ts --tailwind --app --eslint --src-dir --use-npm
-cd APP && npx shadcn@latest init
-npx shadcn@latest add button card input badge skeleton sonner dialog dropdown-menu tabs
-npm i lucide-react motion
-```
+## Step 1: The imagination engine → `DESIGN.md`
 
-Verify the versions you actually got before trusting any syntax below. Tailwind v3
-and v4 have incompatible config, and shadcn emits different tokens for each:
+Read `references/imagination-engine.md` and follow it. Copy
+`assets/DESIGN.template.md` to `DESIGN.md` at the project root and fill it in order:
 
-```bash
-npm ls tailwindcss next react | head; ls src/app/globals.css tailwind.config.* 2>/dev/null
-```
+1. **Distill.** What it is in twelve words, for whom, the one action, the mechanism, three
+   adjectives it must feel and three it must never feel, the proof the page can show.
+2. **Signature.** Five metaphors for the mechanism, scored; the winner becomes one element
+   people will screenshot, made from the product's own UI where possible.
+3. **Direction and calibration.** Choose one of six worlds in `references/directions.md`
+   (quiet-monochrome, luminous-dark, editorial-paper, technical-grid, soft-product,
+   bold-signal) and set its dials. Measure one or two references with
+   `assets/measure-reference.mjs` and write the calibration table
+   (`references/calibration.md`). Take proportions, never brand.
+4. **Storyboard.** Six to nine beats, each with one job, a pattern from
+   `references/sections.md`, a tone, an alignment and real copy drafted now.
+5. **Wireframe.** The first viewport at 1440 and 375 and the signature section, in text,
+   with alignment anchors, the eye path and the squint test.
+6. **System.** Tokens for color, type, space, shape, elevation and motion, from the
+   direction and adjusted by calibration, checked against the ratios in the engine.
+7. **Pre-mortem.** Run `references/slop-audit.md` on the plan, name three things a design
+   director would wince at, and write the screenshot sentence. Then the six-line thesis.
 
-`@import "tailwindcss"` in `globals.css` and **no** `tailwind.config.ts` means v4:
-theme lives in CSS via `@theme inline`. A `tailwind.config.ts` with a `content` array
-means v3. Full decision table and the v3 fallback: `references/scaffold.md`.
+When the user gives reference sites, they are calibration, not templates: measure them,
+learn their proportions and composition, and build an original system for this product.
 
-## Design system
+**Gate:** the checklist at the end of the engine. Most importantly, the screenshot sentence
+describes one site, not a category.
 
-Copy `assets/globals.css` over the generated one and change exactly one value:
-`--primary`, to `brand.primary` from CONFIG. That is the entire branding step.
-
-The constraints that make an unbranded hack look designed:
-
-- **One accent, everything else neutral.** 60% background, 30% surface/text, 10%
-  accent. The accent appears on the primary action and nowhere else. Two accents
-  reads as a template; one accent reads as a product.
-- **One type scale, four sizes.** `text-sm` labels, `text-base` body, `text-xl`
-  section, `text-4xl` hero. No sizes in between. Weight carries hierarchy, not size.
-- **Space in multiples of 4, gaps of 8.** `gap-2 / gap-4 / gap-8` only.
-- **Border > shadow.** `border border-border` on every surface beats a shadow stack
-  and survives a projector. Reserve shadow for things that genuinely float.
-- **One radius token.** From `brand.radius`. Never mix `rounded-md` and `rounded-2xl`
-  in the same view.
-- **Contrast floor 4.5:1, or 7:1 when `demo.surface: projector`.** Projectors eat
-  about two stops of contrast. `text-muted-foreground` on a projector is invisible.
-  Bump it or drop the text.
-
-Tokens, the oklch palette, dark-mode pairing and the vibe-to-scale table:
-`references/design-tokens.md`.
-
-## Copy
-
-Judges read the words. In ten seconds they read three strings: the heading, the button,
-and whatever the empty state says. Those do more work than any visual polish, and most
-teams write them last, at 4am, in thirty seconds.
-
-- **No em dashes.** Not in UI text, seed data, alt text, page titles or toasts. Use a
-  comma, colon, period or parentheses. This matters more here than in the README: the
-  interface is not a document describing the product, it **is** the product, and copy
-  that reads as machine written makes the whole thing read as machine written.
-- **Read it out loud.** If you would not say the sentence to someone standing next to
-  you, do not ship it. "Seamlessly manage your workflows" fails; "Everything flagged in
-  the last day, worst first" passes.
-- **Sentence case, no exclamation marks.** "New review", not "New Review!". Title case
-  reads like a slide deck.
-- **Buttons are verb plus object.** "Connect a source", not "Get started" or "Submit".
-- **One sentence under every page title**, saying what the screen is for. The highest
-  value string in the interface, and the one most often missing, which is why judges
-  spend their ten seconds working out what they are looking at.
-- **One word per concept**, matching the README and the pitch. A thing that is a task
-  here, a job there and a run in the API reads as three people who never spoke.
-- **Seed data is copy.** Judges read your fake data to see whether you understood the
-  domain. "Riverside Elementary HVAC retrofit" says you did; "Test User 1" says you did
-  not.
-
-Per-element wording, the generated-copy tells, budgets and the pre-demo greps:
-`references/ui-copy.md`.
+## Step 2: Tokens, primitives and the system sheet
 
 ```bash
-grep -rn $'\xe2\x80\x94' src/ --include='*.tsx' && echo "EM DASH IN UI"
+cp <skill>/assets/globals.css     src/app/globals.css     # then paste the direction's TOKENS block
+cp <skill>/assets/primitives.tsx  src/components/primitives.tsx
+cp <skill>/assets/motion.tsx      src/components/motion.tsx
+cp <skill>/assets/states.tsx      src/components/states.tsx
+cp <skill>/assets/seed.ts         src/lib/data.ts
+cp <skill>/assets/system-page.tsx src/app/system/page.tsx
 ```
 
-## Images
+Wire the fonts, `MOTION_BOOT`, `MotionRoot` and `Toaster` in the root layout, with the
+thesis as a comment at the top (`references/scaffold.md` has the file). `globals.css`
+removes Tailwind's default palette and shadow scale: a color or shadow that is not a token
+does not render. Radius is named by component (`rounded-tile`, `rounded-panel`,
+`rounded-button`).
 
-**Always ask the user for images. Never invent, hotlink, or substitute them.** An agent
-cannot produce images, and the two things it does instead are both worse than asking:
-it links something that dies on venue wifi, or it leaves grey rectangles that read as
-unfinished.
+Open `/system` and shoot it:
 
-Ask in hour two, when you scaffold, not at hour thirty. Ask for all of them at once and
-give each one a purpose, a size, a format and a fallback, so the request is answerable
-in five minutes.
+```bash
+node <skill>/assets/measure-reference.mjs http://localhost:3000/system --out .design/system
+```
 
-| Image | Size | If they have none |
-|---|---|---|
-| **og:image** | 1200x630 | Screenshot your own app. Highest return image in the project |
-| **Favicon** | 512x512 | A letter mark in the brand color |
-| Product content images | any | A colored block with initials, which looks deliberate |
-| Logo or wordmark | SVG | The project name set in the accent color. Common and fine |
+`.design/` holds screenshots and measurements, not product: add it to `.gitignore`.
 
-Most teams have nothing, and image-free is a good outcome rather than a compromise:
-type-led hero, a wordmark, a CSS gradient, initials blocks, `lucide-react` icons. The
-og:image is the exception worth insisting on, because it renders every time the URL is
-pasted into Slack or the submission form, and it is one screenshot.
+**Gate:** the system sheet, at 1440 and 390, already feels like the product in DESIGN.md.
+If it does not, fix the tokens now. Every section built on wrong tokens is built twice.
 
-Never stock photography (it is the clearest possible template signal), never a
-fabricated company or sponsor logo, never an image on the critical path when
-`demo.offline_safe` is true. Every asset lives in `/public` and is committed.
+### The system, condensed
 
-The request template to send the user, the fallback techniques, `next/image` mechanics,
-alt text and file size limits: `references/imagery.md`.
+The full reasoning lives in the references. These are the rules that catch the most:
 
-## Structure
+- **Type** (`references/typography.md`). One family, two weights (three at most). Display
+  tracking -0.02 to -0.045em, display line height 0.92 to 1.06, hero 3.5 to 5 times the
+  body. Labels 10 to 12px, uppercase, +0.04 to +0.1em. Secondary text is a weaker strength,
+  not a smaller size. `text-wrap: balance` on headings, `tabular-nums` on numbers.
+- **Color** (`references/color.md`). Hierarchy from value, not hue: it must survive
+  grayscale. One accent with one written meaning, under 5% of any screen. Gradients only
+  as the atmosphere field, mixed from the field tokens. Never pure black or pure white.
+- **Layout** (`references/layout.md`). Everything snaps to the container edge; the nav
+  aligns with the content. Section padding to heading gap about 3 to 1. Two to four left
+  edges on the whole page.
+- **Surfaces** (`references/components.md`). Most content needs no box: open text, ruled
+  columns, rows. Tiles for parallel items, cards for objects you act on, panels for stages.
+  One signal per box: tone, or hairline, or soft shadow.
+- **Buttons.** 36, 44, 48px. One action button per section; the rest quiet, ghost, or an
+  arrow link. Labels are verb plus object.
+- **Nav and footer** are part of the identity: pick the direction's pattern and build it
+  once. Every link goes somewhere real.
 
-Semantic markup is the cheapest accessibility pass there is, and it is judge-visible the
-moment anyone tabs through your screen or opens it on a projector.
+## Step 3: The first viewport and the signature
 
-- **One `<h1>` per page**, then `h2`, `h3` in order. Never skip a level to get a size;
-  size comes from the type scale.
-- **Landmarks**: `<header>`, `<nav>`, `<main>`, `<footer>`. `assets/app-shell.tsx`
-  already does this.
-- **Buttons are `<button>`, links are `<a>`.** A `<div onClick>` is invisible to the
-  keyboard and to a screen reader, and tabbing is on the demo-proofing checklist.
-- **Every input has a `<label>`.** A placeholder is not a label; it disappears on focus.
-- **Every image has `alt`.** A real description, or `alt=""` if genuinely decorative.
-- **Lists are `<ul>`/`<ol>`.** A stack of divs reads as one blob to assistive tech.
+Build the hero and the signature first, with hardcoded seed data, exactly as wireframed.
+This is the screenshot that will be shared, judged and put in the og:image.
 
-None of this costs time when done as you build, and all of it costs time when retrofitted
-at hour thirty.
+- The product is visible at second zero (stage, split proof or signature).
+- The eye path is headline, then product or signature, then action.
+- The signature has its still frame, its motion, its reduced-motion state and its phone
+  layout, all built now, not "later".
 
-## The five states
+**Gate:** shoot it at 1440 and 390. Squint: the largest, darkest mass is the headline or
+the signature. Say the screenshot sentence out loud while looking at it. If the image
+does not match the sentence, fix the image.
 
-The single largest quality gap between a hackathon UI and a product UI. Judges find
-them by accident (an empty search, a slow network, a bad input) and that accident
-is where the polish score is decided.
+## Step 4: The rest of the storyboard
 
-| State | What most teams ship | What to ship |
-|---|---|---|
-| **Empty** | blank div | Icon, one sentence of what goes here, the primary action |
-| **Loading** | spinner | Skeleton in the *shape of the real content* |
-| **Error** | crash / raw JSON | Plain sentence + Retry button; never expose a stack trace |
-| **Partial** | nothing | Render what arrived, skeleton the rest |
-| **Success** | silent | Toast or an inline state change: confirm the action landed |
+One file per section in `src/components/landing/`, in storyboard order, each from its
+pattern in `references/sections.md`, each with the copy drafted in the engine
+(`references/ui-copy.md`). Product mocks are built from the real product components with
+seed data (`references/imagery.md`): the landing page and the app cannot drift apart if
+they are the same components.
 
-`assets/states.tsx` has all five as drop-in components. Wire them the moment a screen
-can fetch anything. `references/component-kit.md` covers the shell, the card grid and
-the form pattern.
+Build against hardcoded data that already looks like a successful demo. If the backend
+never lands, there is still a demo; when it lands, one module changes and nothing visual
+moves. That is what `assets/seed.ts` is for.
 
-## Motion
+For product screens: a page header with a title, one sentence saying what the screen is
+for and one primary action; one job per home screen; rows before cards; tasks in sheets.
+`references/sections.md` has the product-screen rules.
 
-Motion is the cheapest possible perceived-quality win and the easiest to overdo.
+## Step 5: Real data, the five states and interaction states
 
-- Entrance only, 150–250ms, `ease-out`. Nothing animates on exit during a demo.
-- Stagger lists by 30ms per item, cap at 8 items.
-- `hover:` on every interactive element. A dead hover state reads as a mockup.
-- **One** delight moment, a number counting up, a card flip, confetti on submit.
-  Exactly one, on the money shot. Two is a toy.
-- `prefers-reduced-motion` guard, always. It is three lines and judges check.
+Swap the seed for the real source behind the same components, then give every screen that
+can fetch, filter or submit all five states from `assets/states.tsx`:
 
-## Demo-proofing
+| State | Ship |
+|---|---|
+| Empty | what goes here, why it is empty, the action that fills it |
+| Loading | a skeleton in the shape of the content; a sentence after two seconds |
+| Error | a sentence a person wrote, then Try again |
+| Partial | what arrived, skeletons for the rest |
+| Success | a toast or an inline change, in the past tense |
 
-Run this checklist before you stop building. Details in `references/demo-proofing.md`:
+And every interactive element gets rest, hover, focus-visible, active, disabled, and busy
+where it submits. Judges double-click and tab; both must be handled.
 
-- [ ] Hard reload the deployed URL on a cold cache. Nothing flashes unstyled.
-- [ ] Kill the network mid-demo. The hero screen still renders (`demo.offline_safe`).
-- [ ] Zoom the browser to 150%. Nothing overlaps or clips.
-- [ ] Open at 1280x720, the projector resolution, not your laptop resolution.
-- [ ] Every screen looks right with the longest realistic string and with zero rows.
-- [ ] Seed data is plausible. No "asdf", no "Test User 1", no lorem ipsum. Judges
-      read your fake data and it tells them whether you thought about the problem.
-- [ ] Console is clean. A red error visible on a shared screen costs real points.
-- [ ] Tab through the hero screen. Focus rings visible, order sane.
-- [ ] Zero em dashes in the UI: `grep -rn $'\xe2\x80\x94' src/ --include='*.tsx'`
-- [ ] Read every visible string out loud. Rewrite the one you stumble on.
-- [ ] Tab title and favicon are yours. "Create Next App" is a real cost.
-- [ ] Paste the deployed URL into Slack. The og:image renders.
-- [ ] No hotlinked images: `grep -rn 'src="http' src/ --include='*.tsx'` returns nothing.
+## Step 6: Motion
+
+`references/motion.md`. The budget per page: one ambient, one signature, section reveals
+once, reactive states everywhere, one delight moment at the money shot. `transform` and
+`opacity` only, loops paused offscreen, reduced motion gets the final state. Use
+`Reveal`, `LineArt`, `Marquee`, `CountUp` and `PauseOffscreen` from `assets/motion.tsx`;
+content stays visible without JavaScript.
+
+## Step 7: Responsive
+
+Design the transforms in `references/layout.md`; do not shrink. At 375: nav collapses to
+wordmark plus action, one action visible without scrolling, the signature simplified but
+present, grids become stacks or snap scrollers, no horizontal overflow, 44px touch targets.
+Check 375, 768, 1024 and 1440 on the production build.
+
+## Step 8: The critique loop
+
+`references/slop-audit.md` has the full loop and the rubric. Up to three rounds:
+
+```bash
+npm run build && npm start
+node <skill>/assets/measure-reference.mjs http://localhost:3000 --out .design/round-1
+bash <skill>/assets/slop-check.sh src
+```
+
+1. Look at every 1440 and 390 slice, one at a time. Write what the eye hits first.
+2. Score the ten dimensions 0 to 3: identity, hierarchy, typography, color, layout,
+   surfaces, signature and proof, copy, motion and states, responsive.
+3. Read `summary.md` against DESIGN.md: sizes off the scale, radii off the tokens, too
+   many left edges, overflow, console errors.
+4. Fix the three lowest things. Re-shoot.
+
+Log each round in DESIGN.md section 8.
+
+**Gate:** 24 or more out of 30, no dimension below 2, `slop-check.sh` exits 0. Below the
+gate after three rounds, take the weakest dimension back to its pass in the engine
+instead of polishing around it.
+
+## Step 9: Demo-proofing and deploy
+
+Run `references/demo-proofing.md` against the deployed URL: cold load, offline hero, the
+projector (`projector` class on `<html>` raises muted text to about 7:1), 150% zoom,
+console clean, tab order, og:image renders when pasted, favicon and title are yours.
+Screen-record the working flow as the fallback.
+
+## Copy, in brief
+
+The words are the interface (`references/ui-copy.md`). The hero names the outcome in two
+lines or fewer. Section headings are claims, not labels ("Rules that hold even if the app
+doesn't", not "Security"). Sentence case, no exclamation marks, no em dashes, no
+seamless, empower, unlock or revolutionize. Buttons are verb plus object. Seed data is
+copy: plausible names, odd amounts, real dates. No fake logos, testimonials or stats.
+
+## Images, in brief
+
+The best image is the product (`references/imagery.md`). Live UI in light frames, line
+diagrams drawn from the tokens, one atmosphere field, a generative motif from the
+metaphor. Never stock photos, illustration packs or AI images. Ask the user once, in hour
+two, for the logo, the favicon and any images the product shows, each with a size and a
+fallback. Generate the og:image from the hero with `next/og`.
 
 ## SALVAGE MODE
 
-When `time.frontend_hours < 6`, or when it is the final two hours and the UI is not
-demoable, stop building and triage:
+When `time.frontend_hours < 6`, or in the final two hours with no demoable UI:
 
-1. Pick the one screen in the demo script. Delete every route that is not it.
-2. Hardcode its data. All of it. Right now.
-3. Apply only: tokens, spacing, one accent, empty + loading states, and the copy pass.
-   The copy pass is fifteen minutes and it is the cheapest quality left on the table:
-   a real page title, one sentence under it, verb-plus-object buttons, plausible seed
-   data, no em dashes. Skip the images entirely and go type-led.
-4. Deploy. Screen-record the working flow as a fallback video.
-5. Only then, if time remains, reconnect real data.
+1. Run the engine's fast path: distill, signature, a direction with its tokens unchanged,
+   a six-beat storyboard, the 1440 first viewport, the thesis. Ten minutes.
+2. Pick the one screen in the demo script. Delete every route that is not it.
+3. Copy the assets, paste the direction block, build the hero with the product in it and
+   hardcoded data.
+4. One section of ruled columns, one stats row of real numbers, the footer. Stop.
+5. Empty and loading states, the copy pass, one critique round, deploy.
+6. Screen-record the working flow.
 
-A single polished screen with fake data beats four broken screens with real data,
-every time, in every rubric.
+One finished screen in a coherent system beats four screens in four styles, in every
+rubric.
+
+## What not to do
+
+- **Do not write JSX before `DESIGN.md` passes its gate.** That is how templates happen.
+- **Do not style a component in isolation.** If it needs a value the tokens lack, add a
+  token and say why in DESIGN.md.
+- **Do not copy a reference's brand.** Measure proportions; build an original system.
+- **Do not add a second accent, a second display face, or a second corner language.**
+- **Do not ship a section without proof** for its claim.
+- **Do not fake the product.** Mocks are real components with seed data; screenshots are
+  of things that exist.
+- **Do not let the page depend on JavaScript to be visible,** or on the network to render
+  the hero when `demo.offline_safe` is true.
 
 ## Time traps
 
-Things that have eaten a hackathon frontend and given back nothing:
+- **Iterating on the hero font for an hour.** The direction picked one. Ship it.
+- **A WebGL field before the page exists.** The CSS field is fine until the critique loop
+  says otherwise.
+- **Building every section in the storyboard when the clock says three.** Build in
+  storyboard order and cut from the bottom.
+- **Auth UI.** Hardcode a signed-in user. Nobody scores the login page.
+- **A dark mode toggle.** Ship the direction's mode. Add the other only if it is tested
+  at every breakpoint.
+- **Pixel-pushing before the critique loop.** Score first, then fix the three lowest.
 
-- Auth UI. Hardcode a logged-in user. Judges do not score your login page.
-- A custom component library. Use shadcn, restyle the token, move on.
-- Responsive mobile layouts, unless the pitch *is* mobile. Demos run on a laptop.
-- Dark mode toggle. Pick one mode per `brand.mode` and commit.
-- Animation libraries beyond `motion`. Tailwind transitions cover 90% of it.
-- A landing page. The app *is* the landing page. Ship the product screen.
-- Refactoring at hour 5. Ugly code that renders beats clean code that does not.
+## Report
+
+```text
+FRONTEND
+
+Direction    quiet-monochrome (dials: light, single weight, balanced, round, flat, mono + 1)
+Thesis       [the THESIS line from DESIGN.md]
+Signature    [the element, and what it proves]
+Calibrated   [reference URLs measured, or "fast path, uncalibrated"]
+Built        [sections and screens], states: 5/5 on [screens]
+Critique     round 2: 26/30 (lowest: motion 2, responsive 2), slop-check 0 fail / 1 warn
+Deployed     [url], og:image renders, offline hero: yes
+
+Unverified   [anything not checked, e.g. "not tested on a real phone"]
+Next         /skillz:polish, then /skillz:readme
+```
 
 ## Handoff
 
-When the UI is demoable, the remaining points live elsewhere: route to
-`/skillz:readme` for the judge-facing README, and `/skillz:version-control` for a
-history that survives a four-person merge at 3am.
+When the UI passes the gate: `/skillz:polish` to make the engineering discoverable,
+`/skillz:readme` for the judge-facing README (use the hero screenshot and the thesis), and
+`/skillz:demo-video`, which takes the brand straight from `globals.css`. If the judge
+pass finds the UI weak, come back to Step 8 with its notes as round N+1.

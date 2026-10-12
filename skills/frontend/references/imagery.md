@@ -1,169 +1,133 @@
-# Imagery
+# Imagery and art direction
 
-An agent building a frontend cannot produce images, and the two things it does instead
-are both worse than asking: it hotlinks something that dies, or it leaves grey
-rectangles that read as unfinished.
+The best image a product has is the product. Both sites this skill was calibrated
+against use almost no pictures: Teampot shows its running app in phones and draws its
+mechanism in line art; Gloam shows live payment cards and paints a luminous field with
+engraved money hidden in it. Neither has a stock photo, an illustration pack or a 3D
+blob.
 
-So: **always ask the user, and describe precisely what you need.** Asking costs one
-message. Guessing costs a broken hero image on a projector.
+## The order of preference
 
-## The ask
+| # | Imagery | When | How |
+|---|---|---|---|
+| 1 | **Live product UI** | always, if there is a product | real components with seed data inside a `Frame`, or the running app in an iframe scaled down |
+| 2 | **Line diagrams** | the mechanism needs explaining | SVG drawn with tokens (`line`, `fg`, one accent path), drawn in on view |
+| 3 | **Atmosphere** | the brand needs a mood behind the hero | `.field`: blurred radial light from the `--field` tokens; or a WebGL noise field with the CSS field as fallback |
+| 4 | **Generative motif** | the metaphor has a texture | Gloam's engraved banknotes and seal dots; a dot matrix; a ruler; drawn in canvas or SVG from code, deterministic |
+| 5 | **Photography** | the product is physical or human and the user has real photos | only what the user supplies, color-graded to the palette |
 
-Ask early, in hour two, at the same time you scaffold. Not at hour thirty when the
-screen is otherwise done and the team is asleep.
+Never: stock photography (people smiling at laptops is the clearest template signal
+there is), illustration packs, AI-generated images with their tells (warped text, extra
+fingers, glossy plastic), 3D blobs and orbs, isometric servers, and screenshots tilted in
+3D perspective for drama.
 
-Ask for everything at once, and for each item give purpose, size, format, and what
-happens if they do not have it. A request the user can act on in five minutes gets
-answered; a vague one gets ignored.
+## Live product UI
+
+- Build mocks from the real components and the real seed data, so the landing page and
+  the app cannot drift apart. Teampot's tab panels are white HTML mocks of its own
+  screens; Gloam's live cards are its real send and prove forms.
+- Make it interactive where it is cheap: a segmented toggle, amount chips, a role
+  switcher. "Try the controls" beats any animation.
+- Show realistic states: a pending row, a refused payment, a non-round balance
+  (`$2,981.40`, not `$1,000.00`).
+- Label it honestly: "The middle phone is the real app on the Tempo testnet."
+
+## Line diagrams
+
+Draw on a grid (viewBox in multiples of 8), 1px strokes in `line` or `line-strong`, the
+one path that matters in `fg` at 1.5px, nodes as small pills with 10 to 12px labels,
+labels in the sans at 500. One color path at most, carrying the accent's meaning. The
+still frame must explain the mechanism on its own; motion adds the direction of flow.
+
+## The atmosphere field
+
+One per screen, inside a `.panel-atmos` container, behind the content:
+
+```tsx
+<Surface kind="panel" className="min-h-[560px] p-10">
+  <div className="field field-drift" aria-hidden />
+  {/* content */}
+</Surface>
+```
+
+Mixed only from `--field-a/b/c`, which the direction sets: graphite and one tint glint
+(luminous), white and soft gray (quiet), paper and a warm blush (editorial). It should be
+noticeable only when it is gone. If someone describes the hero as "a gradient", it is too
+strong.
+
+## Icons and marks
+
+- **One set**, one stroke width (1.3 to 1.5), drawn on a 24 grid. `lucide-react` at
+  `strokeWidth={1.5}`, or a small custom set inline as SVG.
+- **The logo**: an SVG mark with `currentColor` so it works on both grounds, plus a
+  wordmark set in the brand face. A wordmark alone is common and fine.
+- **Favicon**: the mark as SVG, plus a 512 PNG. A letter mark in the action color if
+  there is no mark.
+
+## Ask the user, early
+
+An agent cannot invent the team's logo, photos of their hardware or a sponsor's mark. Ask
+in hour two, once, for everything, with a size, a format and a fallback for each, so the
+request can be answered in five minutes:
 
 ```markdown
-I need a few images for the UI. For each one, tell me if you have it, and if not
-I will use the fallback.
+I need a few images. For each, tell me if you have it; if not, I use the fallback.
 
-1. Favicon. The browser tab icon.
-   512x512 PNG, square, works small. A letterform or a simple mark, not detail.
-   Fallback: a letter mark generated from the project name in the brand color.
+1. Logo or mark. SVG preferred, or a transparent PNG at least 512px.
+   Fallback: the project name set in the brand typeface as a wordmark.
+2. Social preview (og:image), 1200 x 630.
+   Fallback: I generate it from the hero headline and the wordmark with next/og.
+3. Favicon, 512 x 512, simple enough to read at 16px.
+   Fallback: a letter mark in the brand color.
+4. [Images the product itself shows, named specifically: "photos of the three sites in
+   the demo inspection".] Any size over 1200px wide.
+   Fallback: [a deliberate placeholder: initials blocks, a map tile, a diagram].
 
-2. Social preview (og:image). Shown every time the URL is pasted into Slack,
-   Discord, or the submission form.
-   1200x630 PNG. Fallback: I screenshot the app once it looks finished.
-   THIS IS THE ONE THAT MATTERS MOST. See below.
-
-3. Logo or wordmark for the nav, if you have one.
-   SVG preferred, or PNG with a transparent background, at least 200px wide.
-   Fallback: the project name set in the brand color. This is fine and common.
-
-4. Any images the product itself shows: [name them specifically, for example
-   "the three property photos the listing card displays"].
-   Any size over 800px wide. Fallback: I use a colored block with the item's
-   initials, which looks deliberate rather than missing.
-
-If you have nothing, say so and I will build it image-free. That is a normal and
-good-looking outcome, not a compromise.
+If you have nothing, say so. A type-led build with live product UI is a strong outcome,
+not a compromise.
 ```
 
-Adapt item 4 to the actual product. The generic version gets a generic answer.
+Never hotlink, never fabricate a company or sponsor logo, never imply a partnership. A
+sponsor's real logo from their brand page, used as their guidelines allow, is fine.
 
-## What is actually needed, ranked
+## The og:image
 
-| # | Image | Why | If missing |
-|---|---|---|---|
-| 1 | **og:image**, 1200x630 | Renders every time the URL is pasted. Judges paste it | Screenshot the app |
-| 2 | **Favicon** | The tab. A default Next.js icon is a visible cost | Letter mark |
-| 3 | **Product content images** | Only if the demo shows them | Colored block plus initials |
-| 4 | Logo or wordmark | Nice, not required | Type in the accent color |
-| 5 | Empty state illustration | Almost never worth it | An icon |
-
-**The og:image is the highest return image in a hackathon project and it is not a
-design task.** It is a screenshot of your own product, cropped to 1200x630, taken once
-the UI looks finished. It appears in the submission form preview, in every Slack paste,
-and in whatever the organizers post. Teams skip it and lose a free impression.
+It renders every time the URL is pasted into Slack, Discord, X or the submission form,
+which makes it the highest-return image in the project. Generate it from the tokens so it
+always matches:
 
 ```tsx
-// src/app/layout.tsx
-export const metadata = {
-  title: "Project name",
-  description: "One sentence, the same one as the README.",
-  openGraph: { images: ["/og.png"] },
-};
-```
-
-Verify it by pasting the deployed URL into Slack. If nothing renders, it is not working,
-and the cause is usually a relative path or a missing deployment.
-
-## With no images at all
-
-The common case, and it is fine. These techniques look deliberate rather than missing:
-
-- **Type-led hero.** A large heading in the brand accent, set well, with generous space.
-  Most strong product sites are mostly type anyway.
-- **A wordmark instead of a logo.** The project name in the accent color, one weight
-  heavier than body text. Judges do not score logos.
-- **CSS gradients or a mesh background.** A soft radial gradient behind the hero costs
-  three lines and reads as designed. Keep it subtle and inside the palette.
-- **Initials blocks for avatars and thumbnails.** Deterministic color from the id, the
-  first letters on top. Looks like a product decision because it is one.
-- **Icons instead of illustrations.** `lucide-react` is already installed. One icon at
-  the top of an empty state does the whole job.
-- **A screenshot of your own product** wherever a picture is genuinely needed.
-
-```tsx
-// initials block: deterministic, no asset needed, never breaks
-function Initials({ name, id }: { name: string; id: string }) {
-  const hue = [...id].reduce((h, c) => h + c.charCodeAt(0), 0) % 360;
-  return (
-    <div
-      className="grid h-10 w-10 place-items-center rounded-md text-sm font-medium text-white"
-      style={{ backgroundColor: `oklch(0.55 0.12 ${hue})` }}
-      aria-hidden
-    >
-      {name.split(" ").slice(0, 2).map((w) => w[0]).join("")}
-    </div>
+// src/app/opengraph-image.tsx
+import { ImageResponse } from "next/og";
+export const size = { width: 1200, height: 630 };
+export const contentType = "image/png";
+export default function OG() {
+  return new ImageResponse(
+    (
+      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column",
+        justifyContent: "flex-end", padding: 72, background: "#F5F5F5", color: "#000" }}>
+        <div style={{ fontSize: 28, opacity: 0.56 }}>projectname</div>
+        <div style={{ fontSize: 76, letterSpacing: "-0.04em", lineHeight: 0.95, marginTop: 16 }}>
+          The hero headline, word for word
+        </div>
+      </div>
+    ),
+    size,
   );
 }
 ```
 
-## Never
-
-- **Never hotlink.** Not from a CDN you do not control, not from a chat service, not from
-  Google Drive, not from Unsplash by URL. They expire, they rate limit, they fail behind
-  venue wifi, and a broken image is worse than no image. Everything goes in `/public`
-  and gets committed.
-- **Never use stock photography.** Smiling people at a laptop is the single clearest
-  signal of a template. Judges discount the product on sight.
-- **Never fabricate a company or sponsor logo.** Using a sponsor's real logo from their
-  brand page is normally fine and often encouraged; drawing an approximation of one is
-  not, and neither is any arrangement implying an endorsement or partnership you do not
-  have.
-- **Never invent an image the user did not give you.** If the product needs a photograph
-  of a specific real thing, ask. Do not substitute something that merely resembles it.
-- **Never put an image on the critical path.** With `demo.offline_safe: true`, every
-  image is local and the hero screen renders with all of them missing.
+Use the token hex values directly (ImageResponse does not read CSS variables). Check it by
+pasting the deployed URL into Slack.
 
 ## Mechanics
 
-```tsx
-import Image from "next/image";
-
-<Image
-  src="/hero.png"
-  alt="The review queue with three flagged items"   // real description, not "hero image"
-  width={1200}
-  height={630}
-  priority                                          // above the fold only
-/>
-```
-
-Four rules:
-
-- **Always width and height.** Without them the layout jumps as images load, which looks
-  broken on a slow connection, which is exactly the venue connection.
-- **Real alt text.** Describe what is in the image. Judges tab and some check
-  accessibility, and `alt="image"` is a visible miss. Decorative images get `alt=""`.
-- **`priority` only above the fold.** On everything else it fights the content for
-  bandwidth.
-- **Check the file size.** A 4MB PNG hero is eight seconds on venue wifi.
-  ```bash
-  find public -type f \( -name '*.png' -o -name '*.jpg' \) -size +500k -exec ls -lh {} \;
-  ```
-  Anything over about 500KB gets resized or converted to WebP.
-
-## Dark mode
-
-An image with a white background on a dark ground is a glowing rectangle. If
-`brand.mode` includes dark:
-
-- Logos and marks: SVG with `currentColor`, or a transparent PNG.
-- Screenshots: take them in the mode the demo runs in, and no other.
-- Never a JPEG for anything with a flat background. The edges band visibly.
-
-## The check
+- `next/image` with `width` and `height` always, `priority` above the fold only, real
+  `alt` text (or `alt=""` when decorative).
+- Everything in `/public`, committed. Over 500KB gets resized or converted to WebP.
+- Screenshots taken in the mode the page uses, at 2x, cropped to the region that matters.
 
 ```bash
-grep -rn 'src="http' src/ --include='*.tsx'          # hotlinks. there should be none
-grep -rn '<img' src/ --include='*.tsx'               # raw img, missing dimensions
-grep -rn 'alt=""' src/ --include='*.tsx'             # confirm each is truly decorative
-ls -lh public/*.png public/*.jpg 2>/dev/null         # sizes
+grep -rn 'src="http' src/ --include='*.tsx'        # hotlinks: should be none
+find public -type f \( -name '*.png' -o -name '*.jpg' \) -size +500k
 ```
-
-Then paste the deployed URL into Slack and confirm the preview renders.

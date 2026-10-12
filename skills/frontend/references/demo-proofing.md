@@ -102,7 +102,8 @@ app works, not while you are hoping it will.
 
 ## The honest badge
 
-If the demo runs on seed data, say so: `status="demo data"` in the shell, or
-one line in the pitch. Judges find out anyway, usually by asking one question
+If the demo runs on seed data, say so: a `<Status>Demo data</Status>` chip in
+the page header, a footer line like "Demo company. Test money only.", or one
+line in the pitch. Judges find out anyway, usually by asking one question
 you cannot answer. Volunteering it costs a point of "completeness" and buys
 back several of "credibility". Getting caught costs both.
