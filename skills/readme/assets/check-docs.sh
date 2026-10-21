@@ -91,9 +91,11 @@ while IFS= read -r line; do
     red "      $f references missing file: $clean"
     BROKEN=$((BROKEN + 1))
   fi
-done < <(grep -oE '\]\([^)#][^)]*\)' "${DOCS[@]}" 2>/dev/null \
+# -H always prefixes the file name, so every line is file:target whether one doc or
+# many is scanned, and the URL filter applies to the target, not to the file name.
+done < <(grep -HoE '\]\([^)#][^)]*\)' "${DOCS[@]}" 2>/dev/null \
          | sed -E 's/\]\(//; s/\)$//' \
-         | grep -vE '^(https?:|mailto:|#)' || true)
+         | grep -vE '^[^:]*:(https?:|mailto:|#)' || true)
 
 if [ "$BROKEN" -gt 0 ]; then
   fail "$BROKEN local link(s) or image(s) point at files that do not exist"
