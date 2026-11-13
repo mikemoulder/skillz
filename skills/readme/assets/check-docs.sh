@@ -171,12 +171,9 @@ else
 fi
 
 # ── 8. README shape ────────────────────────────────────────────────────────
+# No length cap: the count is reported for information only.
 WORDS=$(wc -w < README.md | tr -d ' ')
-if [ "$WORDS" -gt 1200 ]; then
-  warn "README is $WORDS words. over ~800, move sections into docs/"
-else
-  pass "README length $WORDS words"
-fi
+pass "README length $WORDS words (no cap)"
 
 # The first fifteen lines carry the submission. Check they contain a link and an image.
 HEAD15=$(head -15 README.md)

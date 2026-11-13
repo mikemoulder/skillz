@@ -1,6 +1,5 @@
 <!--
   README template. Fill in, delete what does not apply, delete every comment.
-  Target: under 800 words. Anything longer moves to docs/.
   Hard rule: no em dashes anywhere. Run assets/check-docs.sh before submitting.
 
   The order below is deliberate. A judge reads the first fifteen lines and decides
@@ -24,7 +23,7 @@ Built at [Hackathon] with [Sponsor A] and [Sponsor B].
 
 ## The problem
 
-<!-- 60 words. One person, one situation, in human terms. No market statistics,
+<!-- One person, one situation, in human terms. No market statistics,
      no "in today's world". Who suffers, what they do now, why that is bad. -->
 
 [A named role does a specific painful thing today. It takes N hours, or it fails in a
@@ -32,7 +31,7 @@ specific way, or it requires trusting someone they should not have to trust.]
 
 ## What we built
 
-<!-- 100 words. Concrete and flat. Let the screenshot carry the impression. -->
+<!-- Concrete and flat. Let the screenshot carry the impression. -->
 
 [What the user does, what happens, what they get. The actual workflow, not the vision.]
 
@@ -64,7 +63,7 @@ Where the integration lives.]
 
 ## How it works
 
-<!-- 150 words plus one diagram. Every box in the diagram is a folder in this repo
+<!-- A numbered walkthrough plus one diagram. Every box in the diagram is a folder in this repo
      or a URL you can open. Delete any box that is neither. -->
 
 ```text
@@ -84,7 +83,7 @@ Where the integration lives.]
 
 ## Technical highlights
 
-<!-- Three bullets, 30 words each. The parts that were genuinely hard, and why. -->
+<!-- Three bullets. The parts that were genuinely hard, and why. -->
 
 - **[The hard part].** [What made it hard and what you did about it.]
 - **[The second one].** [Same.]

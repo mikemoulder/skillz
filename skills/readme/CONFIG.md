@@ -34,7 +34,6 @@ evidence:
 
 # ── Documentation depth ─────────────────────────────────────────────────────
 docs:
-  readme_max_words: 800        # over this, sections move into docs/
   tree:            minimal     # minimal (README only) | standard (+2 files) | full
   architecture_md: auto        # true when the diagram outgrows the README
   integrations_md: auto        # true when there are 3+ sponsors, or deep integration
@@ -73,7 +72,7 @@ time:
 | `sponsors[].files` | Populates the `Where` column. Without it the sponsor table is unverifiable and reads as a claim rather than evidence |
 | `evidence.video_url: none` | The three link row becomes two. Never emits a link to something that does not exist |
 | `evidence.contract` set | Adds the verified explorer link above the fold, and a contracts section |
-| `docs.tree: minimal` | Everything stays in the README. Correct for most projects under 800 words |
+| `docs.tree: minimal` | Everything stays in the README. Correct for most projects |
 | `docs.tree: full` | Only when each file has real content. The skill refuses to emit stubs |
 | `style.ambition: bold` | Stronger framing, identical factual claims. Never invents an artifact |
 | `style.audience: sponsors` | Moves the integration table above the problem section |

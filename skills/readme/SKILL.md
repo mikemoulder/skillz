@@ -95,26 +95,26 @@ everything after it. A GIF of the aha moment is better than a static shot. Put i
 
 ## The body
 
-In this order, with these budgets. **Total README under 800 words.** Anything longer
-goes to `docs/`.
+In this order. There is no word or character cap: write as much as the project needs,
+and keep the first fifteen lines carrying the payload so a skimming judge still gets it.
 
-| Section | Words | Contains |
-|---|---:|---|
-| **The problem** | 60 | One person, one pain, in human terms. No market statistics |
-| **What we built** | 100 | Concrete. The actual workflow, plus a second screenshot |
-| **Sponsor integrations** | table | One scannable row each, deep version linked. See below |
-| **How it works** | 150 | The numbered walkthrough plus one diagram |
-| **Technical highlights** | 90 | Three bullets: the hard parts, and why they were hard |
-| **Quick start** | code | Commands that work on a stranger's machine |
-| **What is real, what is not** | 80 | The honesty section. See Evidence below |
-| **Limitations and next** | 80 | Built / Next / Vision, clearly separated |
+| Section | Contains |
+|---|---|
+| **The problem** | One person, one pain, in human terms. No market statistics |
+| **What we built** | Concrete. The actual workflow, plus a second screenshot |
+| **Sponsor integrations** | One scannable row each, deep version linked. See below |
+| **How it works** | The numbered walkthrough plus one diagram |
+| **Technical highlights** | The hard parts, and why they were hard |
+| **Quick start** | Commands that work on a stranger's machine |
+| **What is real, what is not** | The honesty section. See Evidence below |
+| **Limitations and next** | Built / Next / Vision, clearly separated |
 
 Sections to skip unless they earn their place: Contributing, Code of Conduct, License
 discussion, team bios, acknowledgments, a table of contents, an inline API reference,
 and any section that exists because other READMEs have one.
 
-`assets/README.template.md` is this structure as a fill-in file, with the budgets and
-the reasoning inline as comments. Start from it rather than from a blank page.
+`assets/README.template.md` is this structure as a fill-in file, with the reasoning
+inline as comments. Start from it rather than from a blank page.
 
 ## Sponsor integrations
 
